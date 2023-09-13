@@ -1,5 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import Adsense from 'vue-adsense'; 
 
 export default defineNuxtConfig({
   // ...other config options

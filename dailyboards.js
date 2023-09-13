@@ -685,7 +685,7 @@ async function fetchGrid() {
 		const encodedSearchQuery = encodeURIComponent(searchQuery); 	
       // Push the Axios promise to the array
       axiosPromises.push(
-        axios.get(`http://localhost:8080/api/searchcondition?searchQuery=${encodedSearchQuery}`)
+        axios.get(`http://localhost:8081/api/searchcondition?searchQuery=${encodedSearchQuery}`)
       );
     }
   }
