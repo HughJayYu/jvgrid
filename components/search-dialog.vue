@@ -15,7 +15,7 @@
         {{ result.player_tag }}
 	<img
 	  v-if="result.player_mains.length > 0"
-	  :src="'http://localhost:8000/static/stockicons/' + result.player_mains[0].toLowerCase() + '.svg'"
+	  :src="'http://localhost:8080/static/stockicons/' + result.player_mains[0].toLowerCase() + '.svg'"
 	  alt="Main Icon"
 	  style="width: 30px; height: 30px;"
 	>
@@ -77,7 +77,7 @@ export default {
 	},
     async search() {
       try {
-        const response = await axios.get(`http://localhost:8000/api/search?query=${this.searchQuery}`);
+        const response = await axios.get(`http://localhost:8080/api/search?query=${this.searchQuery}`);
         this.searchResults = response.data;
       } catch (error) {
         console.error('Error searching:', error);
