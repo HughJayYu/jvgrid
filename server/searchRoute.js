@@ -73,6 +73,7 @@ router.get('/search', (req, res) => {
 		  winOnLeoAcola: player.winOnLeoAcola, 
 		  evo19place: player.evo19place,
 		  orionrank22: player.orionrank22, 
+		  orEclipse: player.orEclipse,
 		  s4top100: player.s4top100, 
 		  majorWinner: player.majorWinner,
         };
@@ -89,7 +90,7 @@ router.get('/search', (req, res) => {
 // Route: GET /api/searchcondition
 router.get('/searchcondition', (req, res) => {
   const searchQuery = req.query.searchQuery;
-  const categories = ['nationality', 'pgru1', 'pgru2', 'ultrank22', 'lumirankmid23', 'ssc23place', 'kag10place', 'genesis9place', 'bobc5place', 'supermajortop8', 'majortop8', 'btop4', 'winOnLeoAcola', 'evo19place', 'orionrank22', 's4top100', 'majorWinner'];
+  const categories = ['nationality', 'pgru1', 'pgru2', 'ultrank22', 'lumirankmid23', 'ssc23place', 'kag10place', 'genesis9place', 'bobc5place', 'supermajortop8', 'majortop8', 'btop4', 'winOnLeoAcola', 'evo19place', 'orionrank22', 'orEclipse', 's4top100', 'majorWinner'];
   // Open connections to your SQLite3 databases
   const db = new sqlite3.Database('testdb.db');
   db.serialize(() => { 
@@ -140,6 +141,7 @@ router.get('/searchcondition', (req, res) => {
 		  winOnLeoAcola: player.winOnLeoAcola, 
 		  evo19place: player.evo19place,
 		  orionrank22: player.orionrank22, 
+		  orEclipse: player.orEclipse,
 		  s4top100: player.s4top100, 
 		  majorWinner: player.majorWinner,
         };

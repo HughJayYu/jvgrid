@@ -109,8 +109,14 @@ const conditionDescriptions = [
   'Player is from Europe', 
   'Player is from North America', 
   'Player is from Oceania, Southeast Asia, or non-Japan East Asia',
+  'Player was on OrionRank Eclipse 2021',
 ];
 const rowConditions = [
+  {
+	condition: (player) => player.orEclipse == "TRUE", 
+	description: conditionDescriptions[62], 
+	sqlCall: 'orEclipse = "TRUE"',
+  }, 
   {
 	condition: (player) => player.orionrank22 == "TRUE", 
 	description: conditionDescriptions[0], 
@@ -222,25 +228,74 @@ const rowConditions = [
     sqlCall: 'kag10place > 0 AND kag10place <= 64',
   },
   {
-    condition: (player) => player.player_mains.some((main) => arcadeCharacters.includes(main)),
+    condition: (player) => (
+      player.player_mains.includes('G&W') ||
+      player.player_mains.includes('Pac-Man') ||
+      player.player_mains.includes('Donkey Kong') ||
+      player.player_mains.includes('Mario') ||
+      player.player_mains.includes('Luigi') ||
+      player.player_mains.includes('Little Mac') ||
+      player.player_mains.includes('Ryu') ||
+      player.player_mains.includes('Ken') ||
+      player.player_mains.includes('Terry') ||
+      player.player_mains.includes('Kazuya')
+    ),
     description: conditionDescriptions[44],
-    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("${arcadeCharacters.join('","')}"))`,
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("G&W","Pac-Man","Donkey Kong","Mario","Luigi","Little Mac","Ryu","Ken","Terry","Kazuya"))`,
   },
   {
-    condition: (player) => player.player_mains.some((main) => nesCharacters.includes(main)),
+    condition: (player) => (
+      player.player_mains.includes('Duck Hunt') ||
+      player.player_mains.includes('Ice Climbers') ||
+      player.player_mains.includes('R.O.B') ||
+      player.player_mains.includes('Piranha Plant') ||
+      player.player_mains.includes('Peach') ||
+      player.player_mains.includes('Bowser') ||
+      player.player_mains.includes('Link') ||
+      player.player_mains.includes('Zelda') ||
+      player.player_mains.includes('Samus') ||
+      player.player_mains.includes('Ridley') ||
+      player.player_mains.includes('Simon') ||
+      player.player_mains.includes('Pit') ||
+      player.player_mains.includes('Palutena') ||
+      player.player_mains.includes('Snake') ||
+      player.player_mains.includes('Mega Man') ||
+      player.player_mains.includes('Hero') ||
+      player.player_mains.includes('Marth') ||
+      player.player_mains.includes('Meta Knight')
+    ),
     description: conditionDescriptions[45],
-    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("${nesCharacters.join('","')}"))`,
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Duck Hunt","Ice Climbers","R.O.B","Piranha Plant","Peach","Bowser","Link","Zelda","Samus","Ridley","Simon","Pit","Palutena","Snake","Mega Man","Hero","Marth","Meta Knight"))`,
   },
   {
-    condition: (player) => player.player_mains.some((main) => snesCharacters.includes(main)),
+    condition: (player) => (
+      player.player_mains.includes('Captain Falcon') ||
+      player.player_mains.includes('Yoshi') ||
+      player.player_mains.includes('Fox') ||
+      player.player_mains.includes('Falco') ||
+      player.player_mains.includes('Ness') ||
+      player.player_mains.includes('Diddy Kong') ||
+      player.player_mains.includes('King K.Rool')
+    ),
     description: conditionDescriptions[46],
-    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("${snesCharacters.join('","')}"))`,
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Captain Falcon","Yoshi","Fox","Falco","Ness","Diddy Kong","King K.Rool"))`,
   },
   {
-    condition: (player) => player.player_mains.some((main) => gameboyCharacters.includes(main)),
+    condition: (player) => (
+      player.player_mains.includes('Daisy') ||
+      player.player_mains.includes('Dr. Mario') ||
+      player.player_mains.includes('Kirby') ||
+      player.player_mains.includes('King Dedede') ||
+      player.player_mains.includes('PT') ||
+      player.player_mains.includes('Pikachu') ||
+      player.player_mains.includes('Jigglypuff') ||
+      player.player_mains.includes('Mewtwo') ||
+      player.player_mains.includes('Wario') ||
+      player.player_mains.includes('Pichu')
+    ),
     description: conditionDescriptions[47],
-    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("${gameboyCharacters.join('","')}"))`,
-  },  
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Daisy","Dr. Mario","Kirby","King Dedede","PT","Pikachu","Jigglypuff","Mewtwo","Wario","Pichu"))`,
+  }, 
   {
     condition: (player) => player.evo19place > 0,
     description: conditionDescriptions[54],
@@ -262,9 +317,19 @@ const rowConditions = [
     sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%R.O.B%")',
   },  
   {
-    condition: (player) => player.player_mains.some((main) => superHeavies.includes(main)),
+    condition: (player) => (
+      player.player_mains.includes('Bowser') ||
+      player.player_mains.includes('King K.Rool') ||
+      player.player_mains.includes('Donkey Kong') ||
+      player.player_mains.includes('King Dedede') ||
+      player.player_mains.includes('Ganondorf') ||
+      player.player_mains.includes('Incineroar') ||
+      player.player_mains.includes('PT') ||
+      player.player_mains.includes('Kazuya') ||
+      player.player_mains.includes('Piranha Plant')
+    ),
     description: conditionDescriptions[58],
-    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("${superHeavies.join('","')}"))`,
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Bowser","King K.Rool","Donkey Kong","King Dedede","Ganondorf","Incineroar","PT","Kazuya","Piranha Plant"))`,
   },
 ];
 const columnConditions = [
@@ -316,12 +381,12 @@ const columnConditions = [
   {
     condition: (player) => (player.ssc23place > 0 && player.ssc23place < 32) || (player.kag10place > 0 && player.kag10place < 32) || (player.genesis9place > 0 && player.genesis9place < 32) || (player.bobc5place > 0 && player.bobc5place < 32),
     description: conditionDescriptions[16],
-    sqlCall: '(ssc23place > 0 AND ssc23place < 32) OR (kag10place > 0 AND kag10place < 32) OR (genesis9place > 0 AND genesis9place < 32) OR (bobc5place > 0 AND bobc5place < 32)',
+    sqlCall: '((ssc23place > 0 AND ssc23place < 32) OR (kag10place > 0 AND kag10place < 32) OR (genesis9place > 0 AND genesis9place < 32) OR (bobc5place > 0 AND bobc5place < 32))',
   },
   {
     condition: (player) => (player.ssc23place > 0 && player.ssc23place < 16) || (player.kag10place > 0 && player.kag10place < 16) || (player.genesis9place > 0 && player.genesis9place < 16) || (player.bobc5place > 0 && player.bobc5place < 16),
     description: conditionDescriptions[17],
-    sqlCall: '(ssc23place > 0 AND ssc23place < 16) OR (kag10place > 0 AND kag10place < 16) OR (genesis9place > 0 AND genesis9place < 16) OR (bobc5place > 0 AND bobc5place < 16)',
+    sqlCall: '((ssc23place > 0 AND ssc23place < 16) OR (kag10place > 0 AND kag10place < 16) OR (genesis9place > 0 AND genesis9place < 16) OR (bobc5place > 0 AND bobc5place < 16))',
   },
   {
     condition: (player) => player.player_mains.some((main) => {
@@ -422,32 +487,72 @@ const columnConditions = [
     condition: (player) =>
       player.nationality !== 'Japan' && player.nationality !== 'Mexico' && player.nationality !== 'United States',
     description: conditionDescriptions[41],
-    sqlCall: 'nationality NOT IN ("Japan", "Mexico", "United States")',
+    sqlCall: 'nationality != "Japan" AND nationality != "Mexico" AND nationality != "United States"',
   },
   {
-    condition: (player) => player.player_mains.some((main) => n64Characters.includes(main)),
+    condition: (player) => (
+      player.player_mains.includes('Wolf') ||
+      player.player_mains.includes('Young Link') ||
+      player.player_mains.includes('Sheik') ||
+      player.player_mains.includes('Ganondorf') ||
+      player.player_mains.includes('Banjo') ||
+      player.player_mains.includes('Villager')
+    ),
     description: conditionDescriptions[48],
-    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("${n64Characters.join('","')}"))`,
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Wolf","Young Link","Sheik","Ganondorf","Banjo","Villager"))`,
   },
   {
-    condition: (player) => player.player_mains.some((main) => gameCubeCharacters.includes(main)),
+    condition: (player) => (
+      player.player_mains.includes('Olimar') ||
+      player.player_mains.includes('Bowser Jr') ||
+      player.player_mains.includes('Toon Link') ||
+      player.player_mains.includes('Zero Suit Samus') ||
+      player.player_mains.includes('Dark Samus') ||
+      player.player_mains.includes('Ike') ||
+      player.player_mains.includes('Villager')
+    ),
     description: conditionDescriptions[49],
-    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("${gameCubeCharacters.join('","')}"))`,
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Olimar","Bowser Jr","Toon Link","Zero Suit Samus","Dark Samus","Ike","Villager"))`,
   },
   {
-    condition: (player) => player.player_mains.some((main) => wiiWiiUSwitchCharacters.includes(main)),
+    condition: (player) => (
+      player.player_mains.includes('Rosalina') ||
+      player.player_mains.includes('Wii Fit Trainer') ||
+      player.player_mains.includes('Shulk') ||
+      player.player_mains.includes('Mii Brawler') ||
+      player.player_mains.includes('Mii Swordfighter') ||
+      player.player_mains.includes('Mii Gunner') ||
+      player.player_mains.includes('Inkling') ||
+      player.player_mains.includes('Min Min') ||
+      player.player_mains.includes('Byleth') ||
+      player.player_mains.includes('Aegis')
+    ),
     description: conditionDescriptions[50],
-    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("${wiiWiiUSwitchCharacters.join('","')}"))`,
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Rosalina","Wii Fit Trainer","Shulk","Mii Brawler","Mii Swordfighter","Mii Gunner","Inkling","Min Min","Byleth","Aegis"))`,
   },
   {
-    condition: (player) => player.player_mains.some((main) => fightersPass2Characters.includes(main)),
+    condition: (player) => (
+      player.player_mains.includes('Min Min') ||
+      player.player_mains.includes('Steve') ||
+      player.player_mains.includes('Sephiroth') ||
+      player.player_mains.includes('Aegis') ||
+      player.player_mains.includes('Kazuya') ||
+      player.player_mains.includes('Sora')
+    ),
     description: conditionDescriptions[51],
-    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("${fightersPass2Characters.join('","')}"))`,
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Min Min","Steve","Sephiroth","Aegis","Kazuya","Sora"))`,
   },
   {
-    condition: (player) => player.player_mains.some((main) => jrpgCharacters.includes(main)),
+    condition: (player) => (
+      player.player_mains.includes('Shulk') ||
+      player.player_mains.includes('Aegis') ||
+      player.player_mains.includes('Joker') ||
+      player.player_mains.includes('Hero') ||
+      player.player_mains.includes('Cloud') ||
+      player.player_mains.includes('Sephiroth')
+    ),
     description: conditionDescriptions[52],
-    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("${jrpgCharacters.join('","')}"))`,
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Shulk","Aegis","Joker","Hero","Cloud","Sephiroth"))`,
   },
   {
     condition: (player) => player.nationality == 'Mexico',
@@ -460,17 +565,68 @@ const columnConditions = [
     sqlCall: 'nationality = "Canada"',
   },  
   {
-    condition: (player) => europeanNations.includes(player.nationality),
+   condition: (player) => (
+     player.nationality === 'Austria' ||
+     player.nationality === 'Belgium' ||
+     player.nationality === 'Denmark' ||
+     player.nationality === 'Finland' ||
+     player.nationality === 'France' ||
+     player.nationality === 'Germany' ||
+     player.nationality === 'Greece' ||
+     player.nationality === 'Iceland' ||
+     player.nationality === 'Ireland' ||
+     player.nationality === 'Italy' ||
+     player.nationality === 'Luxembourg' ||
+     player.nationality === 'Netherlands' ||
+     player.nationality === 'Norway' ||
+     player.nationality === 'Poland' ||
+     player.nationality === 'Portugal' ||
+     player.nationality === 'Russia' ||
+     player.nationality === 'Scotland' ||
+     player.nationality === 'Spain' ||
+     player.nationality === 'Sweden' ||
+     player.nationality === 'Switzerland' ||
+     player.nationality === 'Turkey' ||
+     player.nationality === 'Ukraine' ||
+     player.nationality === 'United Kingdom'
+   ),
     description: conditionDescriptions[59],
     sqlCall: 'nationality = "Austria" OR nationality = "Belgium" OR nationality = "Denmark" OR nationality = "Finland" OR nationality = "France" OR nationality = "Germany" OR nationality = "Greece" OR nationality = "Iceland" OR nationality = "Ireland" OR nationality = "Italy" OR nationality = "Luxembourg" OR nationality = "Netherlands" OR nationality = "Norway" OR nationality = "Poland" OR nationality = "Portugal" OR nationality = "Russia" OR nationality = "Scotland" OR nationality = "Spain" OR nationality = "Sweden" OR nationality = "Switzerland" OR nationality = "Turkey" OR nationality = "Ukraine" OR nationality = "United Kingdom"',
   },
   {
-    condition: (player) => cenamNations.includes(player.nationality),
+    condition: (player) => (
+    player.nationality === 'Bahamas' ||
+    player.nationality === 'Costa Rica' ||
+    player.nationality === 'Cuba' ||
+    player.nationality === 'Dominican Republic' ||
+    player.nationality === 'El Salvador' ||
+    player.nationality === 'Honduras' ||
+    player.nationality === 'Guatemala' ||
+    player.nationality === 'Jamaica' ||
+    player.nationality === 'Nicaragua' ||
+    player.nationality === 'Puerto Rico' ||
+    player.nationality === 'Trinidad'
+  ),
     description: conditionDescriptions[60],
     sqlCall: 'nationality = "Bahamas" OR nationality = "Costa Rica" OR nationality = "Cuba" OR nationality = "Dominican Republic" OR nationality = "El Salvador" OR nationality = "Honduras" OR nationality = "Guatemala" OR nationality = "Jamaica" OR nationality = "Nicaragua" OR nationality = "Puerto Rico" OR nationality = "Trinidad"',
   },
   {
-    condition: (player) => oceaniaNations.includes(player.nationality),
+    condition: (player) => (
+    player.nationality === 'Australia' ||
+    player.nationality === 'Hong Kong' ||
+    player.nationality === 'India' ||
+    player.nationality === 'Indonesia' ||
+    player.nationality === 'Madagascar' ||
+    player.nationality === 'Malaysia' ||
+    player.nationality === 'Micronesia' ||
+    player.nationality === 'New Zealand' ||
+    player.nationality === 'Philippines' ||
+    player.nationality === 'Singapore' ||
+    player.nationality === 'South Korea' ||
+    player.nationality === 'Taiwan' ||
+    player.nationality === 'Thailand' ||
+    player.nationality === 'Vietnam'
+  ),
     description: conditionDescriptions[61],
     sqlCall: 'nationality = "Australia" OR nationality = "Hong Kong" OR nationality = "India" OR nationality = "Indonesia" OR nationality = "Madagascar" OR nationality = "Malaysia" OR nationality = "Micronesia" OR nationality = "New Zealand" OR nationality = "Philippines" OR nationality = "Singapore" OR nationality = "South Korea" OR nationality = "Taiwan" OR nationality = "Thailand" OR nationality = "Vietnam"',
   },
@@ -529,7 +685,7 @@ async function fetchGrid() {
 		const encodedSearchQuery = encodeURIComponent(searchQuery); 	
       // Push the Axios promise to the array
       axiosPromises.push(
-        axios.get(`http://localhost:8000/api/searchcondition?searchQuery=${encodedSearchQuery}`)
+        axios.get(`http://localhost:8080/api/searchcondition?searchQuery=${encodedSearchQuery}`)
       );
     }
   }

@@ -48,6 +48,7 @@ function createTable(db, db2){
 		winOnLeoAcola	BOOL, 
 		evo19place		INT, 
 		orionrank22		BOOL, 
+		orEclipse		BOOL,
 		s4top100		BOOL, 
 		majorWinner		BOOL
 	)

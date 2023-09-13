@@ -234,6 +234,7 @@ export default {
 	}, 
   handleResultSelected(value) {
     this.selectedCell = { rowIndex: this.clickedRowIndex, columnIndex: this.clickedColumnIndex };
+	
     // Use player object properties for conditions
     const selectedPlayer = this.selectedPlayers.find((player) => player.player_tag === value.player_tag);
     if (selectedPlayer) { 
@@ -257,11 +258,12 @@ export default {
 	  btop4: value.btop4, 
 	  winOnLeoAcola: value.winOnLeoAcola, 
 	  evo19place: value.evo19place,
+	  orEclipse: value.orEclipse,
 	  orionrank22: value.orionrank22, 
 	  s4top100: value.s4top100, 
 	  majorWinner: value.majorWinner,
     };
-  
+
     // Check if both row and column conditions are met
     const rowConditionMet = this.randomRowConditions[this.selectedCell.rowIndex].condition(player);
     const columnConditionMet = this.randomColumnConditions[this.selectedCell.columnIndex].condition(player);
