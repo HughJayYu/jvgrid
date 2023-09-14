@@ -12,13 +12,13 @@ const snesCharacters = [
 ];
 const gameboyCharacters = [
   'Daisy', 'Dr. Mario', 'Kirby', 'King Dedede', 'PT', 'Pikachu', 'Jigglypuff',
-  'Mewtwo', 'Wario', 'Pichu'
+  'Mewtwo', 'Wario', 'Pichu', 'Zero Suit Samus'
 ];
 const n64Characters = [
   'Wolf', 'Young Link', 'Sheik', 'Ganondorf', 'Banjo', 'Villager'
 ];
 const gameCubeCharacters = [
-  'Olimar', 'Bowser Jr', 'Toon Link', 'Zero Suit Samus', 'Dark Samus', 'Ike', 'Villager'
+  'Olimar', 'Bowser Jr', 'Toon Link', 'Dark Samus', 'Ike', 'Villager'
 ];
 const wiiWiiUSwitchCharacters = [
   'Rosalina', 'Wii Fit Trainer', 'Shulk', 'Mii Brawler', 'Mii Swordfighter', 'Mii Gunner', 'Inkling', 'Min Min', 'Byleth', 'Aegis'
@@ -62,46 +62,46 @@ const conditionDescriptions = [
   'Player placed within Top 32 at a 2023 P Tier', 
   'Player placed in Top 16 at a 2023 P Tier', 
   'Player has an offline set win on MkLeo or Acola', 
-  'mains/secondarys a "Mario" character (DK, Wario, Yoshi universes inclusive)', 
-  'mains/secondarys a "Zelda" character',
-  'mains/secondarys a "Fire Emblem" character', 
-  'mains/secondarys Steve', 
-  'mains/secondarys a "third party" character', 
-  'mains/secondarys a "DLC" character (Smash 4 DLC inclusive', 
-  'mains/secondarys a character that first appeared on the Game Boy Advance, Nintendo DS, or Nintendo 3DS',
+  'mains/secondaries a "Mario" character (DK, Wario, Yoshi universes inclusive)', 
+  'mains/secondaries a "Zelda" character',
+  'mains/secondaries a "Fire Emblem" character', 
+  'mains/secondaries Steve', 
+  'mains/secondaries a "third party" character', 
+  'mains/secondaries a "DLC" character (Smash 4 DLC inclusive', 
+  'mains/secondaries a character that first appeared on the Game Boy Advance, Nintendo DS, or Nintendo 3DS',
   'Player was at Genesis 9',
   'Player was at Battle of BC 5',
   'Player was at Kagaribi 10',
   'Player placed within Top 64 of Genesis 9', 
   'Player placed within Top 64 of Battle of BC 5',
   'Player placed within Top 64 of Kagaribi 10',
-  'Player mains/secondarys a character that debuted in Smash 64',
-  'Player mains/secondarys a character that debuted in Melee',
-  'Player mains/secondarys a character that debuted in Brawl',
-  'Player mains/secondarys a character that debuted in Smash 4',
-  'Player mains/secondarys a character that debuted in Ultimate',
-  'Player mains/secondarys a "Top Tier" (UltRank Feb 2023 Tier List, S tiers)', 
-  'Player mains/secondarys a "High Tier" (UltRank Feb 2023 Tier List, A tiers)',
-  'Player mains/secondarys a "Mid Tier" (UltRank Feb 2023 Tier List, B tiers)', 
-  'Player mains/secondarys a "Low/Bottom Tier" (UltRank Feb 2023 Tier List, C+D Tiers)',
+  'Player mains/secondaries a character that debuted in Smash 64',
+  'Player mains/secondaries a character that debuted in Melee',
+  'Player mains/secondaries a character that debuted in Brawl',
+  'Player mains/secondaries a character that debuted in Smash 4',
+  'Player mains/secondaries a character that debuted in Ultimate',
+  'Player mains/secondaries a "Top Tier" (UltRank Feb 2023 Tier List, S tiers)', 
+  'Player mains/secondaries a "High Tier" (UltRank Feb 2023 Tier List, A tiers)',
+  'Player mains/secondaries a "Mid Tier" (UltRank Feb 2023 Tier List, B tiers)', 
+  'Player mains/secondaries a "Low/Bottom Tier" (UltRank Feb 2023 Tier List, C+D Tiers)',
   'Player is not from Japan, Mexico, or the United States.',
   'Player has made Top 8 at a 2023 Supermajor+ (S/S+/P Tier)', 
   'Player has made Top 8 at a 2023 Major (A/A+/S/S+/P Tier)',
-  'mains/secondarys a character that first appeared on arcade hardware', 
-  'mains/secondarys a character that first appeared on the NES',
-  'mains/secondarys a character that first appeared on the SNES', 
-  'mains/secondarys a character that first appeared on the Game Boy or Game Boy Color', 
-  'mains/secondarys a character that first appeared on the N64', 
-  'mains/secondarys a character that first appeared on the GameCube', 
-  'mains/secondarys a character that first appeared on the Nintendo Wii, Wii U, or Switch', 
-  'mains/secondarys a Fighters Pass 2 character', 
-  'mains/secondarys a Xenoblade, Persona, Dragon Quest, or Final Fantasy character', 
+  'mains/secondaries a character that first appeared on arcade hardware', 
+  'mains/secondaries a character that first appeared on the NES',
+  'mains/secondaries a character that first appeared on the SNES', 
+  'mains/secondaries a character that first appeared on the Game Boy or Game Boy Color', 
+  'mains/secondaries a character that first appeared on the N64', 
+  'mains/secondaries a character that first appeared on the GameCube', 
+  'mains/secondaries a character that first appeared on the Nintendo Wii, Wii U, or Switch', 
+  'mains/secondaries a Fighters Pass 2 character', 
+  'mains/secondaries a Xenoblade, Persona, Dragon Quest, or Final Fantasy character', 
   'is from Mexico',
   'Player was at EVO 2019', 
   'Player placed within Top 64 at EVO 2019', 
   'Player has won a major', 
-  'Player mains/secondarys R.O.B', 
-  'Player mains/secondarys a superheavy (112 weight+)', 
+  'Player mains/secondaries R.O.B', 
+  'Player mains/secondaries a superheavy (112 weight+)', 
   'Player is from Europe', 
   'Player is from North America', 
   'Player is from Oceania, Southeast Asia, or non-Japan East Asia',
@@ -386,11 +386,11 @@ const columnConditions = [
   },
   {
     condition: (player) => player.player_mains.some((main) => {
-      const modernHandheldCharacters = ['Roy', 'Lucas', 'Lucario', 'Dark Pit', 'Robin', 'Chrom', 'Lucina', 'Isabelle', 'Greninja', 'Corrin', 'Incineroar'];
+      const modernHandheldCharacters = ['Roy', 'Lucas', 'Lucario', 'Dark Pit', 'Robin', 'Chrom', 'Lucina', 'Isabelle', 'Greninja', 'Corrin', 'Incineroar', 'Zero Suit Samus'];
       return modernHandheldCharacters.includes(main);
     }),
     description: conditionDescriptions[25],
-    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Roy%" OR player_main LIKE "%Lucas%" OR player_main LIKE "%Lucario%" OR player_main LIKE "%Dark Pit%" OR player_main LIKE "%Robin%" OR player_main LIKE "%Chrom%" OR player_main LIKE "%Lucina%" OR player_main LIKE "%Isabelle%" OR player_main LIKE "%Greninja%" OR player_main LIKE "%Corrin%" OR player_main LIKE "%Incineroar%")',
+    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Roy%" OR player_main LIKE "%Lucas%" OR player_main LIKE "%Zero Suit Samus%" OR player_main LIKE "%Lucario%" OR player_main LIKE "%Dark Pit%" OR player_main LIKE "%Robin%" OR player_main LIKE "%Chrom%" OR player_main LIKE "%Lucina%" OR player_main LIKE "%Isabelle%" OR player_main LIKE "%Greninja%" OR player_main LIKE "%Corrin%" OR player_main LIKE "%Incineroar%")',
   },
   {
     condition: (player) => player.genesis9place > 0,
@@ -502,13 +502,12 @@ const columnConditions = [
       player.player_mains.includes('Olimar') ||
       player.player_mains.includes('Bowser Jr') ||
       player.player_mains.includes('Toon Link') ||
-      player.player_mains.includes('Zero Suit Samus') ||
       player.player_mains.includes('Dark Samus') ||
       player.player_mains.includes('Ike') ||
       player.player_mains.includes('Villager')
     ),
     description: conditionDescriptions[49],
-    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Olimar","Bowser Jr","Toon Link","Zero Suit Samus","Dark Samus","Ike","Villager"))`,
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Olimar","Bowser Jr","Toon Link","Dark Samus","Ike","Villager"))`,
   },
   {
     condition: (player) => (
