@@ -4,7 +4,7 @@ const cron = require('node-cron');
 const sqlite3 = require('sqlite3');
 const path = require('path');
 const app = express();
-const port = process.env.PORT || 8081;
+const port = 8081;
 
 // Middleware
 app.use(express.json()); // Parse JSON request bodies
