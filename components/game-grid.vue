@@ -142,7 +142,7 @@ export default {
   mounted() {
 	  // Check if guessesLeft is stored in localStorage
     // Make an HTTP GET request to fetch the board data
-    fetch('https://jvgrid.com/api/board')
+    fetch('/api/board')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
