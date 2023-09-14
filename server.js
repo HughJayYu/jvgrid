@@ -12,7 +12,7 @@ const path = require('path'); // Import the 'path' moduled
 const axios = require ('axios'); 
 const app = express();
 const port = process.env.PORT || 8081; // Use process.env.PORT for flexibility
-const apiBaseUrl = process.env.API_BASE_URL || 'http://jvgrid.com/api/';
+
 
 app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use('/', serveStatic(path.join(__dirname, 'dist')));
@@ -67,39 +67,26 @@ cron.schedule('0 9 * * *', () => {
    });
 });
 app.get('/api/board', (req, res) => {
-  axios.get(`${apiBaseUrl}board`)
-    .then((response) => {
-      res.json(response.data);
-    })
-    .catch((error) => {
-      console.error('Error retrieving board:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    });
+	res.json(storedBoardData); 
 });
 const gameData = []; 
 
 
-app.post('/api/save-game-data', (req, res) => {
+app.post('/api/save-game-data', (req, res) => { 
   const { matchingSquaresCount } = req.body;
-  axios.post(`${apiBaseUrl}save-game-data`, { matchingSquaresCount })
-    .then(() => {
-      console.log("Game data pushed.");
-      res.sendStatus(200);
-    })
-    .catch((error) => {
-      console.error('Error saving game data:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    });
-});
+  console.log("Game data pushed."); 
+  gameData.push(matchingSquaresCount); 
+  console.log("Global game number: #" + gameData.length); 
+  res.sendStatus(200);
+}); 
 app.get('/api/global-stats', (req, res) => {
-  axios.get(`${apiBaseUrl}global-stats`)
-    .then((response) => {
-      res.json(response.data);
-    })
-    .catch((error) => {
-      console.error('Error retrieving global stats:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    });
+  // Calculate frequencies of guessesLeft values (0-9)
+  const frequencyCounts = new Array(10).fill(0);
+
+  gameData.forEach((matchingSquaresCount) => {
+    frequencyCounts[matchingSquaresCount]++;
+  });
+  res.json({ frequencies: frequencyCounts });
 });
 
 
@@ -138,27 +125,22 @@ function calculateRarityScores(rowCondition, columnCondition, player) {
 }
 
 app.post('/api/send-rarity-data', (req, res) => {
-  const { rowCondition, columnCondition, player } = req.body;
-  axios.post(`${apiBaseUrl}send-rarity-data`, { rowCondition, columnCondition, player })
-    .then((response) => {
-      const rarityPercentage = response.data.rarityPercentage;
-      console.log(rarityPercentage);
-      res.json({ rarityPercentage });
-    })
-    .catch((error) => {
-      console.error('Error sending rarity data:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    });
+  // Retrieve the rarity data from the request body
+  const getData = req.body;
+  // Calculate rarity scores for the specific conditions
+  const rowCondition = deserializeRowOrColumnCondition(getData.rowCondition);
+  const columnCondition = deserializeRowOrColumnCondition(getData.columnCondition);
+  const rarityPercentage = calculateRarityScores(rowCondition, columnCondition, getData.player);
+  console.log(rarityPercentage); 
+  // Respond with the rarity percentage in the JSON response
+  res.json({ rarityPercentage });
 });
+
 app.get('/api/rarity-scores', (req, res) => {
-  axios.get(`${apiBaseUrl}rarity-scores`)
-    .then((response) => {
-      res.json(response.data);
-    })
-    .catch((error) => {
-      console.error('Error retrieving rarity scores:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    });
+
+  // Send the rarity scores as a JSON response
+  res.json({ rarityData });
+  
 });
 
 // Start the server
