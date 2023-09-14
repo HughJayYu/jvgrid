@@ -20,6 +20,14 @@ const db3 = new sqlite3.Database('game_boards.db');
 let storedBoardData = null;
 let boardID = 2;
 
+db3.get('SELECT * from daily_data WHERE day = 1', [], (err, row) => {
+	if (err) { 
+		console.error('Error retrieving initial board:', err); 
+	} else { 
+		console.log("Getting initial board."); 
+		storedBoardData = row; 
+	}
+});
 // Schedule a task to retrieve a board
 cron.schedule('0 9 * * *', () => {
   console.log("Getting new board.");
