@@ -7,9 +7,13 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
+    "start": "concurrently \"npm run web\" \"npm run api\"",
+    "web": "node .output/server/index.mjs",
+    "api": "npm start"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "concurrently": "^8.2.1",
     "nuxt": "^3.7.0"
   },
   "dependencies": {
