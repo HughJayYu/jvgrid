@@ -7,9 +7,9 @@ const app = express();
 const port = 8081;
 
 // Middleware
+app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use(express.json()); // Parse JSON request bodies
 app.use(cors()); // Enable CORS (if needed)
-app.use('/static', express.static(path.join(__dirname, 'static')));
 
 // Open a connection to your SQLite3 database
 const db = new sqlite3.Database('testdb.db');
