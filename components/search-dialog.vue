@@ -15,7 +15,7 @@
         {{ result.player_tag }}
 	<img
 	  v-if="result.player_mains.length > 0"
-	  :src="'/static/stockicons/' + result.player_mains[0].toLowerCase() + '.svg'"
+	  :src="'/stockicons/' + result.player_mains[0].toLowerCase() + '.svg'"
 	  alt="Main Icon"
 	  style="width: 30px; height: 30px;"
 	>
