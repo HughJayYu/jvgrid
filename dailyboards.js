@@ -684,7 +684,7 @@ async function fetchGrid() {
 		const encodedSearchQuery = encodeURIComponent(searchQuery); 	
       // MAKE SURE TO ADD THE http://localhost:8081 WHEN YOU REGENERATE BOARDS
       axiosPromises.push(
-        axios.get(`/api/searchcondition?searchQuery=${encodedSearchQuery}`)
+        axios.get(`http://localhost:8081/api/searchcondition?searchQuery=${encodedSearchQuery}`)
       );
     }
   }
@@ -745,7 +745,7 @@ async function fetchGrid() {
 		if (!(
 		possibleAnswers[0].includes(0) || possibleAnswers[1].includes(0) || possibleAnswers[2].includes(0) || 
 		possibleAnswers[0].includes(1) || possibleAnswers[0].includes(2) || possibleAnswers[1].includes(1) || 
-		possibleAnswers[1].includes(2) || possibleAnswers[2].includes(2) || possibleAnswers[2].includes(2) ||
+		possibleAnswers[1].includes(2) || possibleAnswers[2].includes(1) || possibleAnswers[2].includes(2) ||
 		possibleAnswers[0].includes(3) || possibleAnswers[1].includes(3) || possibleAnswers[2].includes(3) ||
 		possibleAnswers[0].includes(4) || possibleAnswers[1].includes[4] || possibleAnswers[2].includes(4)
 		

@@ -4,7 +4,7 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('game_boards.db');
 
 // Define the SQL query to select all rows from the game_boards table
-const query = 'SELECT possibleAnswers FROM daily_data';
+const query = 'SELECT * FROM daily_data';
 
 // Execute the query to retrieve data
 db.all(query, [], (err, rows) => {
@@ -13,8 +13,10 @@ db.all(query, [], (err, rows) => {
   } else {
     // Print the retrieved data
     console.log('Retrieved data from daily_data table:');
+	console.log(rows[0].randomRowConditions);
+	console.log(rows[0].randomColumnConditions);
     rows.forEach((row) => {
-      console.log(row);
+      console.log(row.possibleAnswers);
     });
   }
 
