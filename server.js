@@ -35,7 +35,7 @@ cron.schedule('0 9 * * *', () => {
 });
 
 // API Routes
-app.get('http://jvgrid.com/api/board', (req, res) => {
+app.get('/api/board', (req, res) => {
   res.json(storedBoardData);
 });
 
@@ -87,10 +87,6 @@ app.get('/api/rarity-scores', (req, res) => {
 // Serve Nuxt 3 frontend
 app.use(express.static(path.join(__dirname, '.output/client')));
 
-// Catch-all route for serving the Nuxt 3 frontend
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '.output/client', 'index.html'));
-});
 
 // Start the server
 app.listen(port, () => {
