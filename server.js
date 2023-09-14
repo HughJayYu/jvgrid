@@ -19,9 +19,18 @@ app.use('/', serveStatic(path.join(__dirname, '.output')));
 
 
 // Middleware
-app.use(express.json()); // Parse JSON request bodies
-app.use(cors()); // Enable CORS (if needed)
-
+1
+// Middleware to handle API routes
+app.use((req, res, next) => {
+  // Check if the request URL starts with "/api/"
+  if (req.url.startsWith('/api/')) {
+    // Request is for the API, continue to API routes
+    next();
+  } else {
+    // Request is for the front-end, serve the HTML file
+    res.sendFile(path.join(__dirname, '.output', 'index.html'));
+  }
+});
 // Open a connection to your SQLite3 database
 const db = new sqlite3.Database('testdb.db');
 const db2 = new sqlite3.Database('testdb2.db'); 
