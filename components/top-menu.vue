@@ -12,7 +12,7 @@
 			<img src="../static/youtube.svg" alt="YouTube logo" />
 		</a> 
 		<a href="https://www.youtube.com/watch?v=VTo_SjsrKRc">
-			<img src="../stockicons/mario.svg" alt="Mario icon" />
+			<img src="../public/stockicons/mario.svg" alt="Mario icon" />
 		</a>
 		<a href = "https://docs.google.com/document/d/1uX4QSPpJR9JHm8RFcN3TX6TSxNoYs1nGJFYd4M-4LzA/edit?usp=sharing">
 			<img src="../static/help.svg" alt="Help icon" />
