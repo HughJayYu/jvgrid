@@ -13,7 +13,8 @@ const axios = require ('axios');
 const app = express();
 const port = process.env.PORT || 8081; // Use process.env.PORT for flexibility
 
-
+app.use(express.json()); // Parse JSON request bodies
+app.use(cors()); // Enable CORS (if needed)
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
 // Middleware to handle API routes
