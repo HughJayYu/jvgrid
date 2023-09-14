@@ -683,7 +683,7 @@ async function fetchGrid() {
         );
 		
 		const encodedSearchQuery = encodeURIComponent(searchQuery); 	
-      // Push the Axios promise to the array
+      // MAKE SURE TO ADD THE http://localhost:8081 WHEN YOU REGENERATE BOARDS
       axiosPromises.push(
         axios.get(`/api/searchcondition?searchQuery=${encodedSearchQuery}`)
       );
