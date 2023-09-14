@@ -35,7 +35,7 @@ cron.schedule('0 9 * * *', () => {
 });
 
 // API Routes
-app.get('/api/board', (req, res) => {
+app.get('http://jvgrid.com/api/board', (req, res) => {
   res.json(storedBoardData);
 });
 
