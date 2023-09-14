@@ -364,4 +364,11 @@ export default {
   margin-top: 20px; /* Add some top margin to separate it from other content */
   color: #333; /* Text color */
 }
+@media screen and (max-width: 768px) {
+  .content {
+    width: 90%; /* Adjust the width for smaller screens */
+    padding: 20px; /* Adjust the padding for smaller screens */
+    max-width: 100%; /* Allow it to take the full width */
+  }
+}
 </style>

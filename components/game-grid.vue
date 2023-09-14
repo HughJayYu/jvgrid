@@ -533,6 +533,13 @@ export default {
   padding: 5px; /* Optional: Padding for readability */
   border-radius: 5px; /* Optional: Rounded corners for aesthetics */
 }
+@media screen and (max-width: 768px) {
+  .content {
+    width: 90%; /* Adjust the width for smaller screens */
+    padding: 20px; /* Adjust the padding for smaller screens */
+    max-width: 100%; /* Allow it to take the full width */
+  }
+}
 </style>
 
 
