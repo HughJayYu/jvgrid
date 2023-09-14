@@ -101,7 +101,7 @@ export default {
   methods: {
      async fetchGlobalStats() {
       try {
-        const response = await fetch('http://localhost:8081/api/global-stats'); // Replace with your actual API endpoint
+        const response = await fetch('https://jvgrid.com/api/global-stats'); // Replace with your actual API endpoint
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
