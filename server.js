@@ -15,7 +15,7 @@ const port = process.env.PORT || 8081; // Use process.env.PORT for flexibility
 
 
 app.use('/static', express.static(path.join(__dirname, 'static')));
-app.use('/', serveStatic(path.join(__dirname, 'dist')));
+app.use('/', serveStatic(path.join(__dirname, '.output')));
 
 
 // Middleware
