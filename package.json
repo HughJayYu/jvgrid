@@ -33,5 +33,4 @@
     "vue-search-input": "^1.1.12",
     "vue3-click-away": "^1.2.4"
   },
-  "proxy": "http://localhost:8000"
 }

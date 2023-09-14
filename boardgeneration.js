@@ -57,7 +57,7 @@ export function initializeGridWithConditions() {
         );
 		
 		const encodedSearchQuery = encodeURIComponent(searchQuery); 	
-		axios.get(`http://jvgrid.com/api/searchcondition?searchQuery=${encodedSearchQuery}`)
+		axios.get(`http://localhost:8081/api/searchcondition?searchQuery=${encodedSearchQuery}`)
 		  .then((response) => {
 			// Extract the list of matching players from the response data
 			const matchingPlayers = response.data;
