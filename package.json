@@ -6,7 +6,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
     "start": "concurrently \"npm run web\" \"npm run api\"",
     "web": "node .output/server/index.mjs",
     "api": "npm start"
