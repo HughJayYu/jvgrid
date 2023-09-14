@@ -80,10 +80,6 @@ export default {
 	copyButtonText() { 
 		return this.isCopied ? "Copied to clipboard!" : "Copy"; 
 	},
-	answerCounts() { 
-		this.fetchGlobalStats();
-		return this.globalData;
-	},
 	calculateRarityScore() { 
 		let cumulativeScore = 0; 
 		console.log(this.progressGrid.rarityScore);
@@ -112,6 +108,10 @@ export default {
         console.error('Error fetching global stats:', error);
       }
     }, 
+	 answerCounts() { 
+		this.fetchGlobalStats();
+		return this.globalData;
+	},
     handleCloseMessage() {
       this.showGameOver = false;
 	  this.$emit('close-message'); 

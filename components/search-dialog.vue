@@ -77,7 +77,7 @@ export default {
 	},
     async search() {
       try {
-        const response = await axios.get(`http://localhost:8081/api/search?query=${this.searchQuery}`);
+        const response = await axios.get(`https://jvgrid.com/api/search?query=${this.searchQuery}`);
         this.searchResults = response.data;
       } catch (error) {
         console.error('Error searching:', error);
