@@ -87,7 +87,9 @@ export default {
 			row.forEach((square) => { 
             if (square && square.isMatching && square.rarityScore) {
               cumulativeScore += parseInt(square.rarityScore);
-            }
+            } else if (!square.isMatching) { 
+			  cumulativeScore += 100; 
+			}
 		});
 	}); 
 	this.rarityScore = 900 - cumulativeScore;
