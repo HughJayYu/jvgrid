@@ -16,6 +16,9 @@ const db = new sqlite3.Database('testdb.db');
 const db2 = new sqlite3.Database('testdb2.db');
 const db3 = new sqlite3.Database('game_boards.db');
 
+const searchRoute = require('./server/searchRoute');
+app.use('/api', searchRoute);
+
 // Initialize storedBoardData
 let storedBoardData = null;
 let boardID = 2;
