@@ -113,7 +113,7 @@ export default {
 			const matchingSquaresCount = this.grid.flat().filter(square => square.isMatching).length;
 			if (!isGridFull && !this.completedState) { 
 				console.log("Working as intended."); 
-				fetch('https://jvgrid.com/api/save-game-data', {
+				fetch('/api/save-game-data', {
 				  method: 'POST',
 				  headers: {
 					'Content-Type': 'application/json',
@@ -283,7 +283,7 @@ export default {
       const serializedRarityData = JSON.stringify(rarityData, this.customSerializer);
   
       // Make an API call to get the rarity score for the updated square
-      fetch('https://jvgrid.com/api/send-rarity-data', {
+      fetch('/api/send-rarity-data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -309,7 +309,7 @@ export default {
       });
   
       if (isGridFull) {
-        fetch('https://jvgrid.com/api/save-game-data', {
+        fetch('/api/save-game-data', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
