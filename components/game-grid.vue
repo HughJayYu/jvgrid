@@ -113,7 +113,7 @@ export default {
 			const matchingSquaresCount = this.grid.flat().filter(square => square.isMatching).length;
 			if (!isGridFull && !this.completedState) { 
 				console.log("Working as intended."); 
-				fetch('http://localhost:8081/api/save-game-data', {
+				fetch('http://jvgrid.com/api/save-game-data', {
 				  method: 'POST',
 				  headers: {
 					'Content-Type': 'application/json',
@@ -142,7 +142,7 @@ export default {
   mounted() {
 	  // Check if guessesLeft is stored in localStorage
     // Make an HTTP GET request to fetch the board data
-    fetch('http://localhost:8081/api/board')
+    fetch('http://jvgrid.com/api/board')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -283,7 +283,7 @@ export default {
       const serializedRarityData = JSON.stringify(rarityData, this.customSerializer);
   
       // Make an API call to get the rarity score for the updated square
-      fetch('http://localhost:8081/api/send-rarity-data', {
+      fetch('http://jvgrid.com/api/send-rarity-data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -309,7 +309,7 @@ export default {
       });
   
       if (isGridFull) {
-        fetch('http://localhost:8081/api/save-game-data', {
+        fetch('http://jvgrid.com/api/save-game-data', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
