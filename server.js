@@ -4,6 +4,7 @@ Object.keys(require.cache).forEach((key) => {
 });
 
 const express = require('express');
+const serveStatic = require('serve-static');
 const cors = require('cors'); // If you need CORS support
 const cron = require('node-cron'); 
 const sqlite3 = require('sqlite3');
