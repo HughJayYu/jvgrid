@@ -15,11 +15,8 @@ const port = process.env.PORT || 8081; // Use process.env.PORT for flexibility
 
 
 app.use('/static', express.static(path.join(__dirname, 'static')));
-app.use('/', serveStatic(path.join(__dirname, '.output')));
+app.use('/', serveStatic(path.join(__dirname, 'dist')));
 
-
-// Middleware
-1
 // Middleware to handle API routes
 app.use((req, res, next) => {
   // Check if the request URL starts with "/api/"
@@ -28,7 +25,7 @@ app.use((req, res, next) => {
     next();
   } else {
     // Request is for the front-end, serve the HTML file
-    res.sendFile(path.join(__dirname, '.output', 'index.html'));
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
   }
 });
 // Open a connection to your SQLite3 database
