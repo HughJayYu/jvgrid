@@ -24,7 +24,7 @@ app.use((req, res, next) => {
     next();
   } else {
     // Request is for the front-end, serve the HTML file
-    res.sendFile(path.join(__dirname, '.output', 'index.mjs'));
+    res.sendFile(path.join(__dirname, '.output/server', 'index.mjs'));
   }
 });
 // Open a connection to your SQLite3 database
