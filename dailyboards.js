@@ -429,11 +429,11 @@ const columnConditions = [
   },
   {
     condition: (player) => player.player_mains.some((main) => {
-      const brawlCharacters = ['Meta Knight', 'Pit', 'Zero Suit Samus', 'Wario', 'Snake', 'Ike', 'Pokémon Trainer', 'Diddy Kong', 'Lucas', 'Sonic', 'King Dedede', 'Olimar', 'Lucario', 'R.O.B.', 'Toon Link', 'Wolf'];
+      const brawlCharacters = ['Meta Knight', 'Pit', 'Zero Suit Samus', 'Wario', 'Snake', 'Ike', 'PT', 'Diddy Kong', 'Lucas', 'Sonic', 'King Dedede', 'Olimar', 'Lucario', 'R.O.B.', 'Toon Link', 'Wolf'];
       return brawlCharacters.includes(main);
     }),
     description: conditionDescriptions[34],
-    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Meta Knight%" OR player_main LIKE "%Pit%" OR player_main LIKE "%Zero Suit Samus%" OR player_main LIKE "%Wario%" OR player_main LIKE "%Snake%" OR player_main LIKE "%Ike%" OR player_main LIKE "%Pokémon Trainer%" OR player_main LIKE "%Diddy Kong%" OR player_main LIKE "%Lucas%" OR player_main LIKE "%Sonic%" OR player_main LIKE "%King Dedede%" OR player_main LIKE "%Olimar%" OR player_main LIKE "%Lucario%" OR player_main LIKE "%R.O.B%" OR player_main LIKE "%Toon Link%" OR player_main LIKE "%Wolf%")',
+    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Meta Knight%" OR player_main LIKE "%Pit%" OR player_main LIKE "%Zero Suit Samus%" OR player_main LIKE "%Wario%" OR player_main LIKE "%Snake%" OR player_main LIKE "%Ike%" OR player_main LIKE "%PT%" OR player_main LIKE "%Diddy Kong%" OR player_main LIKE "%Lucas%" OR player_main LIKE "%Sonic%" OR player_main LIKE "%King Dedede%" OR player_main LIKE "%Olimar%" OR player_main LIKE "%Lucario%" OR player_main LIKE "%R.O.B%" OR player_main LIKE "%Toon Link%" OR player_main LIKE "%Wolf%")',
   },
   {
     condition: (player) => player.player_mains.some((main) => {
