@@ -590,7 +590,7 @@ const columnConditions = [
      player.nationality === 'United Kingdom'
    ),
     description: conditionDescriptions[59],
-    sqlCall: 'nationality = "Austria" OR nationality = "Belgium" OR nationality = "Denmark" OR nationality = "Finland" OR nationality = "France" OR nationality = "Germany" OR nationality = "Greece" OR nationality = "Iceland" OR nationality = "Ireland" OR nationality = "Italy" OR nationality = "Luxembourg" OR nationality = "Netherlands" OR nationality = "Norway" OR nationality = "Poland" OR nationality = "Portugal" OR nationality = "Russia" OR nationality = "Scotland" OR nationality = "Spain" OR nationality = "Sweden" OR nationality = "Switzerland" OR nationality = "Turkey" OR nationality = "Ukraine" OR nationality = "United Kingdom"',
+    sqlCall: '(nationality = "Austria" OR nationality = "Belgium" OR nationality = "Denmark" OR nationality = "Finland" OR nationality = "France" OR nationality = "Germany" OR nationality = "Greece" OR nationality = "Iceland" OR nationality = "Ireland" OR nationality = "Italy" OR nationality = "Luxembourg" OR nationality = "Netherlands" OR nationality = "Norway" OR nationality = "Poland" OR nationality = "Portugal" OR nationality = "Russia" OR nationality = "Scotland" OR nationality = "Spain" OR nationality = "Sweden" OR nationality = "Switzerland" OR nationality = "Turkey" OR nationality = "Ukraine" OR nationality = "United Kingdom")',
   },
   {
     condition: (player) => (
@@ -607,7 +607,7 @@ const columnConditions = [
     player.nationality === 'Trinidad'
   ),
     description: conditionDescriptions[60],
-    sqlCall: 'nationality = "Bahamas" OR nationality = "Costa Rica" OR nationality = "Cuba" OR nationality = "Dominican Republic" OR nationality = "El Salvador" OR nationality = "Honduras" OR nationality = "Guatemala" OR nationality = "Jamaica" OR nationality = "Nicaragua" OR nationality = "Puerto Rico" OR nationality = "Trinidad"',
+    sqlCall: '(nationality = "Bahamas" OR nationality = "Costa Rica" OR nationality = "Cuba" OR nationality = "Dominican Republic" OR nationality = "El Salvador" OR nationality = "Honduras" OR nationality = "Guatemala" OR nationality = "Jamaica" OR nationality = "Nicaragua" OR nationality = "Puerto Rico" OR nationality = "Trinidad")',
   },
   {
     condition: (player) => (
@@ -627,7 +627,7 @@ const columnConditions = [
     player.nationality === 'Vietnam'
   ),
     description: conditionDescriptions[61],
-    sqlCall: 'nationality = "Australia" OR nationality = "Hong Kong" OR nationality = "India" OR nationality = "Indonesia" OR nationality = "Madagascar" OR nationality = "Malaysia" OR nationality = "Micronesia" OR nationality = "New Zealand" OR nationality = "Philippines" OR nationality = "Singapore" OR nationality = "South Korea" OR nationality = "Taiwan" OR nationality = "Thailand" OR nationality = "Vietnam"',
+    sqlCall: '(nationality = "Australia" OR nationality = "Hong Kong" OR nationality = "India" OR nationality = "Indonesia" OR nationality = "Madagascar" OR nationality = "Malaysia" OR nationality = "Micronesia" OR nationality = "New Zealand" OR nationality = "Philippines" OR nationality = "Singapore" OR nationality = "South Korea" OR nationality = "Taiwan" OR nationality = "Thailand" OR nationality = "Vietnam")',
   },
 ];
 
