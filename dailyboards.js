@@ -429,7 +429,7 @@ const columnConditions = [
   },
   {
     condition: (player) => player.player_mains.some((main) => {
-      const brawlCharacters = ['Meta Knight', 'Pit', 'Zero Suit Samus', 'Wario', 'Snake', 'Ike', 'PT', 'Diddy Kong', 'Lucas', 'Sonic', 'King Dedede', 'Olimar', 'Lucario', 'R.O.B.', 'Toon Link', 'Wolf'];
+      const brawlCharacters = ['Meta Knight', 'Pit', 'Zero Suit Samus', 'Wario', 'Snake', 'Ike', 'PT', 'Diddy Kong', 'Lucas', 'Sonic', 'King Dedede', 'Olimar', 'Lucario', 'R.O.B', 'Toon Link', 'Wolf'];
       return brawlCharacters.includes(main);
     }),
     description: conditionDescriptions[34],
