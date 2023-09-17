@@ -21,11 +21,11 @@ app.use('/api', searchRoute);
 
 // Initialize storedBoardData
 let storedBoardData = null;
-let boardID = 2;
+let boardID = 6;
 //BOARD GENERATION COMMENT STARTS HERE
-
+/*
 const db3 = new sqlite3.Database('game_boards.db');
-db3.get('SELECT * from daily_data WHERE day = 1', [], (err, row) => {
+db3.get('SELECT * from daily_data WHERE day = 5', [], (err, row) => {
 	if (err) { 
 		console.error('Error retrieving initial board:', err); 
 	} else { 
@@ -99,7 +99,7 @@ app.get('/api/rarity-scores', (req, res) => {
 
 // Serve Nuxt 3 frontend
 app.use(express.static(path.join(__dirname, '.output/client')));
-
+*/
 //BOARD GENERATION CLOSE COMMENT GOES HERE
 // Start the server
 app.listen(port, () => {

@@ -43,7 +43,7 @@ const cenamNations = [
 	'Bahamas', 'Costa Rica', 'Cuba', 'Dominican Republic', 'El Salvador', 'Honduras', 'Guatemala', 'Jamaica', 'Nicaragua', 'Puerto Rico', 'Trinidad'
 ];
 const oceaniaNations = [ 
-	'Australia', 'Hong Kong', 'India', 'Indonesia', 'Madagascar', 'Malaysia', 'Micronesia', 'New Zealand', 'Philippines', 'Singapore', 'South Korea', 'Taiwan', 'Thailand', 'Vietnam'
+	'Australia', 'Hong Kong', 'India', 'Indonesia', 'Madagascar', 'Malaysia', 'Micronesia', 'New Zealand', 'Philippines', 'Singapore', 'South Korea', 'Taiwan', 'Thailand', 'Vietnam', 'China'
 ];
 
 const conditionDescriptions = [
@@ -150,7 +150,7 @@ const rowConditions = [
   {
     condition: (player) => player.player_tag.toLowerCase().startsWith('a') || player.player_tag.toLowerCase().startsWith('e') || player.player_tag.toLowerCase().startsWith('i') || player.player_tag.toLowerCase().startsWith('o') || player.player_tag.toLowerCase().startsWith('u'),
     description: conditionDescriptions[6],
-    sqlCall: 'LOWER(players.player_tag) LIKE "a%" OR LOWER(players.player_tag) LIKE "e%" OR LOWER(players.player_tag) LIKE "i%" OR LOWER(players.player_tag) LIKE "o%" OR LOWER(players.player_tag) LIKE "u%"',
+    sqlCall: '(LOWER(players.player_tag) LIKE "a%" OR LOWER(players.player_tag) LIKE "e%" OR LOWER(players.player_tag) LIKE "i%" OR LOWER(players.player_tag) LIKE "o%" OR LOWER(players.player_tag) LIKE "u%")',
   },
   {
     condition: (player) => player.player_tag.toLowerCase().startsWith('t'),
@@ -425,7 +425,7 @@ const columnConditions = [
       return meleeCharacters.includes(main);
     }),
     description: conditionDescriptions[33],
-    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Peach%" OR player_main LIKE "%Bowser%" OR player_main LIKE "%Ice Climbers%" OR player_main LIKE "%Sheik%" OR player_main LIKE "%Zelda%" OR player_main LIKE "%Dr. Mario%" OR player_main LIKE "%Pichu%" OR player_main LIKE "%Falco%" OR player_main LIKE "%Marth%" OR player_main LIKE "%Young Link%" OR player_main LIKE "%Ganondorf%" OR player_main LIKE "%Mewtwo%" OR player_main LIKE "%Roy%" OR player_main LIKE "%Game & Watch%")',
+    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Peach%" OR player_main LIKE "%Bowser%" OR player_main LIKE "%Ice Climbers%" OR player_main LIKE "%Sheik%" OR player_main LIKE "%Zelda%" OR player_main LIKE "%Dr. Mario%" OR player_main LIKE "%Pichu%" OR player_main LIKE "%Falco%" OR player_main LIKE "%Marth%" OR player_main LIKE "%Young Link%" OR player_main LIKE "%Ganondorf%" OR player_main LIKE "%Mewtwo%" OR player_main LIKE "%Roy%" OR player_main LIKE "%G&W%")',
   },
   {
     condition: (player) => player.player_mains.some((main) => {
@@ -453,11 +453,11 @@ const columnConditions = [
   },
   {
     condition: (player) => { 
-      const topTierCharacters = ['Steve', 'Aegis', 'Joker', 'Sonic', 'Fox', 'R.O.B', 'Kazuya', 'Roy', 'Peach', 'Daisy', 'Cloud', 'Wolf', 'Diddy Kong', 'Pikachu', 'Pac-Man', 'Snake', 'Min Min', 'Palutena', 'Game & Watch', 'Shulk'];
+      const topTierCharacters = ['Steve', 'Aegis', 'Joker', 'Sonic', 'Fox', 'R.O.B', 'Kazuya', 'Roy', 'Peach', 'Daisy', 'Cloud', 'Wolf', 'Diddy Kong', 'Pikachu', 'Pac-Man', 'Snake', 'Min Min', 'Palutena', 'G&W', 'Shulk'];
       return player.player_mains.some((main) => topTierCharacters.includes(main));
     }, 
     description: conditionDescriptions[37],
-    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Steve%" OR player_main LIKE "%Aegis%" OR player_main LIKE "%Joker%" OR player_main LIKE "%Sonic%" OR player_main LIKE "%Fox%" OR player_main LIKE "%R.O.B%" OR player_main LIKE "%Kazuya%" OR player_main LIKE "%Roy%" OR player_main LIKE "%Peach%" OR player_main LIKE "%Daisy%" OR player_main LIKE "%Cloud%" OR player_main LIKE "%Wolf%" OR player_main LIKE "%Diddy Kong%" OR player_main LIKE "%Pikachu%" OR player_main LIKE "%Pac-Man%" OR player_main LIKE "%Snake%" OR player_main LIKE "%Min Min%" OR player_main LIKE "%Palutena%" OR player_main LIKE "%Game & Watch%" OR player_main LIKE "%Shulk%")',
+    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Steve%" OR player_main LIKE "%Aegis%" OR player_main LIKE "%Joker%" OR player_main LIKE "%Sonic%" OR player_main LIKE "%Fox%" OR player_main LIKE "%R.O.B%" OR player_main LIKE "%Kazuya%" OR player_main LIKE "%Roy%" OR player_main LIKE "%Peach%" OR player_main LIKE "%Daisy%" OR player_main LIKE "%Cloud%" OR player_main LIKE "%Wolf%" OR player_main LIKE "%Diddy Kong%" OR player_main LIKE "%Pikachu%" OR player_main LIKE "%Pac-Man%" OR player_main LIKE "%Snake%" OR player_main LIKE "%Min Min%" OR player_main LIKE "%Palutena%" OR player_main LIKE "%G&W%" OR player_main LIKE "%Shulk%")',
   },
   {
     condition: (player) => { 
@@ -557,12 +557,7 @@ const columnConditions = [
     condition: (player) => player.nationality == 'Mexico',
     description: conditionDescriptions[53],
     sqlCall: 'nationality = "Mexico"',
-  },  
-  {
-    condition: (player) => player.nationality == 'Canada',
-    description: conditionDescriptions[62],
-    sqlCall: 'nationality = "Canada"',
-  },  
+  },   
   {
    condition: (player) => (
      player.nationality === 'Austria' ||
@@ -624,10 +619,11 @@ const columnConditions = [
     player.nationality === 'South Korea' ||
     player.nationality === 'Taiwan' ||
     player.nationality === 'Thailand' ||
-    player.nationality === 'Vietnam'
+    player.nationality === 'Vietnam' || 
+	player.nationality === 'China' 
   ),
     description: conditionDescriptions[61],
-    sqlCall: '(nationality = "Australia" OR nationality = "Hong Kong" OR nationality = "India" OR nationality = "Indonesia" OR nationality = "Madagascar" OR nationality = "Malaysia" OR nationality = "Micronesia" OR nationality = "New Zealand" OR nationality = "Philippines" OR nationality = "Singapore" OR nationality = "South Korea" OR nationality = "Taiwan" OR nationality = "Thailand" OR nationality = "Vietnam")',
+    sqlCall: '(nationality = "Australia" OR nationality = "China" OR nationality = "Hong Kong" OR nationality = "India" OR nationality = "Indonesia" OR nationality = "Madagascar" OR nationality = "Malaysia" OR nationality = "Micronesia" OR nationality = "New Zealand" OR nationality = "Philippines" OR nationality = "Singapore" OR nationality = "South Korea" OR nationality = "Taiwan" OR nationality = "Thailand" OR nationality = "Vietnam")',
   },
 ];
 

@@ -421,7 +421,7 @@ const columnConditions = [
       return meleeCharacters.includes(main);
     }),
     description: conditionDescriptions[33],
-    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Peach%" OR player_main LIKE "%Bowser%" OR player_main LIKE "%Ice Climbers%" OR player_main LIKE "%Sheik%" OR player_main LIKE "%Zelda%" OR player_main LIKE "%Dr. Mario%" OR player_main LIKE "%Pichu%" OR player_main LIKE "%Falco%" OR player_main LIKE "%Marth%" OR player_main LIKE "%Young Link%" OR player_main LIKE "%Ganondorf%" OR player_main LIKE "%Mewtwo%" OR player_main LIKE "%Roy%" OR player_main LIKE "%Game & Watch%")',
+    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Peach%" OR player_main LIKE "%Bowser%" OR player_main LIKE "%Ice Climbers%" OR player_main LIKE "%Sheik%" OR player_main LIKE "%Zelda%" OR player_main LIKE "%Dr. Mario%" OR player_main LIKE "%Pichu%" OR player_main LIKE "%Falco%" OR player_main LIKE "%Marth%" OR player_main LIKE "%Young Link%" OR player_main LIKE "%Ganondorf%" OR player_main LIKE "%Mewtwo%" OR player_main LIKE "%Roy%" OR player_main LIKE "%G&W%")',
   },
   {
     condition: (player) => player.player_mains.some((main) => {
@@ -449,7 +449,7 @@ const columnConditions = [
   },
   {
     condition: (player) => { 
-      const topTierCharacters = ['Steve', 'Aegis', 'Joker', 'Sonic', 'Fox', 'R.O.B', 'Kazuya', 'Roy', 'Peach', 'Daisy', 'Cloud', 'Wolf', 'Diddy Kong', 'Pikachu', 'Pac-Man', 'Snake', 'Min Min', 'Palutena', 'Game & Watch', 'Shulk'];
+      const topTierCharacters = ['Steve', 'Aegis', 'Joker', 'Sonic', 'Fox', 'R.O.B', 'Kazuya', 'Roy', 'Peach', 'Daisy', 'Cloud', 'Wolf', 'Diddy Kong', 'Pikachu', 'Pac-Man', 'Snake', 'Min Min', 'Palutena', 'G&W', 'Shulk'];
       return player.player_mains.some((main) => topTierCharacters.includes(main));
     }, 
     description: conditionDescriptions[37],
