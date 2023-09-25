@@ -1,59 +1,68 @@
-
 <template>
   <div>
-    <!-- Add an overlay to dim the background when the dialog is shown -->
     <div class="search-dialog-overlay" v-if="showSearchDialog">
       <search-dialog @result-selected="handleResultSelected" :rowIndex="clickedRowIndex" :columnIndex="clickedColumnIndex" @close-dialog="closeSearchDialog" />
     </div>
+
     <div class="game-container">
-      <div class="grid-container" v-if="conditionsLoaded">
-        <!-- Display column titles above each column -->
-        <div class="grid">
-          <div class="grid-row">
-		  <div class = "column-labels">
-            <div class="grid-column" v-for="(column, columnIndex) in grid" :key="columnIndex">
-              <div class="column-condition">
-                {{ randomColumnConditions[columnIndex].description }}
+      <!-- Create a container for the title and grid -->
+      <div class="title-grid-container">
+        <div class="title"> 
+          <h2> JVGrid #{{ boardID }} <br>
+		  Difficulty: {{ getDifficulty }} </h2>
+        </div>
+        
+        <div class="grid-container" v-if="conditionsLoaded">
+          <!-- Display column titles above each column -->
+          <div class="grid">
+            <div class="grid-row">
+              <div class="column-labels">
+                <div class="grid-column" v-for="(column, columnIndex) in grid" :key="columnIndex">
+                  <div class="column-condition">
+                    {{ randomColumnConditions[columnIndex].description }}
+                  </div>
+                </div>
               </div>
             </div>
-			</div>
           </div>
-        </div>
 
-        <div class="grid">
-          <div class="grid-row" v-for="(row, rowIndex) in grid" :key="rowIndex">
-            <div class="row-condition">{{ randomRowConditions[rowIndex].description }}</div>
-            <div
-              class="grid-box"
-              v-for="(square, columnIndex) in row"
-              :key="columnIndex"
-              @click="openSearchDialog(rowIndex, columnIndex)"
-              @mouseenter="darkenGridBox(rowIndex, columnIndex)"
-              @mouseleave="undarkenGridBox(rowIndex, columnIndex)"
-            >
+          <div class="grid">
+            <div class="grid-row" v-for="(row, rowIndex) in grid" :key="rowIndex">
+              <div class="row-condition">{{ randomRowConditions[rowIndex].description }}</div>
               <div
-                :class="['grid-box', grid[rowIndex][columnIndex].isMatching ? 'matched' : '', grid[rowIndex][columnIndex].darkened ? 'darkened' : '']"
+                class="grid-box"
+                v-for="(square, columnIndex) in row"
+                :key="columnIndex"
+                @click="openSearchDialog(rowIndex, columnIndex)"
+                @mouseenter="darkenGridBox(rowIndex, columnIndex)"
+                @mouseleave="undarkenGridBox(rowIndex, columnIndex)"
               >
-                {{ grid[rowIndex][columnIndex] ? grid[rowIndex][columnIndex].player_tag : '' }}
-				<span class="rarity-score" v-if="square.isMatching">
-				  {{ grid[rowIndex][columnIndex].rarityScore }}%
-				</span>
+                <div
+                  :class="['grid-box', grid[rowIndex][columnIndex].isMatching ? 'matched' : '', grid[rowIndex][columnIndex].darkened ? 'darkened' : '']"
+                >
+                  {{ grid[rowIndex][columnIndex] ? grid[rowIndex][columnIndex].player_tag : '' }}
+                  <span class="rarity-score" v-if="square.isMatching">
+                    {{ grid[rowIndex][columnIndex].rarityScore }}%
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-	<div class="guesses-left-container">
-	  <p>Guesses Left: <span class="guesses-number" :class="transitionClass">{{ guessesLeft }}</span></p>
-      <button
-        class="give-up-button"
-        @click="handleGiveUp"
-      >
-        {{ guessesLeft === 0 ? 'Show Summary' : 'Give Up' }}
-      </button>
-    </div>	
+
+      <div class="guesses-left-container">
+        <p>Guesses Left: <span class="guesses-number" :class="transitionClass">{{ guessesLeft }}</span></p>
+        <button
+          class="give-up-button"
+          @click="handleGiveUp"
+        >
+          {{ guessesLeft === 0 ? 'Show Summary' : 'Give Up' }}
+        </button>
+      </div>	
     </div>
-	<game-over v-if="showGameOver" :progressGrid = "grid" :possibleAnswers = "possibleAnswers" :answerKey = "answerKey" :boardID = "boardID" @close-message="handleCloseMessage" />
+
+    <game-over v-if="showGameOver" :conditionsGrid="conditionsArray" :progressGrid="grid" :possibleAnswers="possibleAnswers" :answerKey="answerKey" :boardID="boardID" @close-message="handleCloseMessage" />
   </div>
 </template>
 
@@ -103,6 +112,7 @@ export default {
 	  boardID: '',
 	  oldBoardID: '',
 	  completedState: false,
+	  conditionsArray: [],
     };
   }, 
   watch: { 
@@ -139,9 +149,26 @@ export default {
 		}
 	}
   },
+  computed: {
+	getDifficulty() { 
+		const sum = this.calculateDifficulty(); 
+		console.log(sum); 
+		if ((sum >= 0 && sum <= 25) || this.possibleAnswers[0].includes(6) || this.possibleAnswers[1].includes(6) || this.possibleAnswers[2].includes(6)) { 
+			return "Very Hard"; 
+		} else if (sum >= 26 && sum <= 50) { 
+			return "Hard"; 
+		} else if (sum >= 51 && sum <= 150) { 
+			return "Medium"; 
+		} else if (sum >= 151) { 
+			return "Easy"; 
+		}
+		return "bugged"; 
+	},
+	},
   mounted() {
 	  // Check if guessesLeft is stored in localStorage
     // Make an HTTP GET request to fetch the board data
+	// REMOVE THE LOCALHOST WHEN YOU PUSH ANSWERS
     fetch('/api/board')
       .then((response) => {
         if (!response.ok) {
@@ -154,12 +181,11 @@ export default {
         // Handle the received board data
         this.boardID = JSON.parse(data.day);
 		this.grid = JSON.parse(data.grid);
+		this.conditionsArray = JSON.parse(data.grid); 
 		this.randomRowConditions = JSON.parse(data.randomRowConditions, this.customDeserializer);
 		this.randomColumnConditions = JSON.parse(data.randomColumnConditions, this.customDeserializer); 
 		this.possibleAnswers = JSON.parse(data.possibleAnswers); 
 		this.answerKey = JSON.parse(data.answerKey); 
-		console.log(this.possibleAnswers);
-		console.log(this.answerKey); 
 		const savedGuessesLeft = localStorage.getItem('guessesLeft');
 		const gridProgress = localStorage.getItem('grid'); 
 		const chosenPlayers = localStorage.getItem('selectedPlayers'); 
@@ -232,6 +258,15 @@ export default {
   closeSearchDialog() { 
 		this.showSearchDialog = false; 
 	}, 
+  calculateDifficulty() {
+    let sum = 0; 
+	for (let i = 0; i < this.possibleAnswers.length; i++) { 
+		for (let j = 0; j < this.possibleAnswers[i].length; j++) { 
+			sum += this.possibleAnswers[i][j]; 
+		}
+	}
+	return (sum/9); 
+  },
   handleResultSelected(value) {
     this.selectedCell = { rowIndex: this.clickedRowIndex, columnIndex: this.clickedColumnIndex };
 	
@@ -262,6 +297,13 @@ export default {
 	  orionrank22: value.orionrank22, 
 	  s4top100: value.s4top100, 
 	  majorWinner: value.majorWinner,
+	  glitchTop16: value.glitchTop16,
+	  genesisTop16: value.genesisTop16,
+	  sscTop16: value.sscTop16, 
+	  bobcppTop16: value.bobcppTop16,
+	  kagTop8: value.kagTop8, 
+	  makesmovesTop16: value.makesmovesTop16,
+	  fb20place: value.fb20place,	  
     };
 
     // Check if both row and column conditions are met
@@ -342,6 +384,8 @@ export default {
     localStorage.setItem('grid', JSON.stringify(this.grid)); 
     localStorage.setItem('selectedPlayers', JSON.stringify(this.selectedPlayers)); 
     localStorage.setItem('boardID', this.boardID); 
+	const localStorageChangeEvent = new Event('localStorageChange'); 
+	window.dispatchEvent(localStorageChangeEvent);
     this.showSearchDialog = false;
   },
 },
@@ -390,7 +434,7 @@ export default {
   flex-direction: column; /* Display columns as a column */
   align-items: center; /* Center elements horizontally */
   gap: 10px;
-  margin-top: 50px; /* Increase the top margin to make room for the counter */
+  margin-top: 10px; /* Increase the top margin to make room for the counter */
   width: 100%; /* Occupy the full width */
 }
 .guesses-number {
@@ -433,7 +477,7 @@ export default {
   text-overflow: ellipsis; /* Add ellipsis for long text */
   white-space: normal; /* Allow text to wrap */
   text-align: center;
-  margin-top: 100px; /* Adjust the margin to align the text above the column */
+  margin-top: 25px; /* Adjust the margin to align the text above the column */
 }
 
 /* Style each grid box with flexible width */
@@ -461,6 +505,11 @@ export default {
   font-size: 20px;
   white-space: normal; /* Allow text to wrap */
   text-align: center;
+  color: black; /* Default color */
+  transition: color 1.5s ease; /* Define the transition */
+}
+.grid-square.red {
+  color: red;
 }
 
 /* Style each row */
@@ -539,6 +588,11 @@ export default {
     padding: 20px; /* Adjust the padding for smaller screens */
     max-width: 100%; /* Allow it to take the full width */
   }
+}
+
+.title-grid-container {
+  text-align: center; /* Center the title text */
+  margin-top: 20px; /* Add margin to move the title down */
 }
 </style>
 

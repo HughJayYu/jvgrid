@@ -1,5 +1,5 @@
 <template>
-  <div class="game-over-message" v-if="showGameOver">
+  <div class="game-over-message" v-if="showGameOver" :class="{ 'zoomed-in': isZoomedIn }">
     <div class="content">
       <!-- Move the button inside the content div -->
       <button class="close-button" @click="handleCloseMessage">×</button>
@@ -30,20 +30,20 @@
 	<div class="possible-answers-grid">
 	<h2 class="answers-heading">Possible Answers</h2>
       <div class="grid-row" v-for="(row, rowIndex) in possibleAnswers" :key="rowIndex">
-        <div class="grid-box" v-for="(count, columnIndex) in row" :key="columnIndex">
+        <div class="grid-box" v-for="(count, columnIndex) in row" :key="columnIndex" @click="showPlayerTags(rowIndex, columnIndex)"
+		>
           {{ count }}
         </div>
       </div>
     </div>
-  <div>
-  <!-- add answer key function later when it works! -->
-    <button>Answer Keys Coming Soon! </button>
-  </div>
+	<h3> (Click corresponding boxes to see possible answers) </h3>
   <br>
+  <h2 class="average-heading">Average Score</h2> 
+  <p class="average-score">{{ averageScore }}</p>
   <h2 class="graph-heading">Player Scores</h2>
    <div class="bar-graph">
       <div
-        v-for="(count, index) in answerCounts"
+        v-for="(count, index) in globalData"
         :key="index"
         class="bar"
         :style="{ height: `${count * 10}px` }"
@@ -61,6 +61,7 @@
 export default {
   name: "GameOver",
   props: {
+	conditionsGrid: Array,
 	progressGrid: Array, 
 	possibleAnswers: Array,
 	answerKey: Array, 
@@ -69,20 +70,37 @@ export default {
   data() {
     return {
       showGameOver: true, // Initialize to true if needed
+	  isZoomedIn: false,
 	  isCopied: false, 
 	  totalGuesses: '', 
 	  averageGuesses: '',
 	  globalData: [], 
 	  rarityScore: '',
+	  statsFetched: false,
     };
+  },
+  mounted() { 
+	if(!this.statsFetched) { 
+		this.fetchGlobalStats(); 
+	}
+	this.detectZoom(); 
+	window.addEventListener('resize', this.detectZoom); 
   },
   computed: { 
 	copyButtonText() { 
 		return this.isCopied ? "Copied to clipboard!" : "Copy"; 
 	},
+	averageScore() { 
+		if (this.globalData.length == 0) {
+			return 0; 
+		}
+		const totalScore = this.globalData.reduce((acc, value, index) => acc + value * index, 0);
+        const totalGamesPlayed = this.globalData.reduce((acc, value) => acc + value, 0);
+
+        return (totalScore/totalGamesPlayed);
+    },
 	calculateRarityScore() { 
 		let cumulativeScore = 0; 
-		console.log(this.progressGrid.rarityScore);
 		this.progressGrid.forEach((row) => {
 			row.forEach((square) => { 
             if (square && square.isMatching && square.rarityScore) {
@@ -97,8 +115,32 @@ export default {
 	},
   },
   methods: {
+	 detectZoom() { 
+		if (window.innerWidth !== document.documentElement.clientWidth) {
+			this.isZoomedIn = true; 
+		} else { 
+			this.isZoomedIn = false; 
+		}
+	},
+    showPlayerTags(rowIndex, columnIndex) {
+      // Check if there's a player tag at the clicked square
+      if (this.possibleAnswers[rowIndex][columnIndex] > 0) {
+        // Retrieve the player tags from the answerKey or another source
+        const playerTags = this.answerKey[rowIndex][columnIndex];
+		const playerTagValues = playerTags.map(player => player.player_tag);
+		const conditions = this.conditionsGrid[rowIndex][columnIndex]; 
+		const rowConditions = conditions[0].description; 
+		const columnConditions = conditions[1].description;
+		console.log(rowConditions); 
+		console.log(columnConditions); 
+        if (playerTagValues) {
+          // Display the player tags or perform any other desired action
+          alert(`Row Condition: ${rowConditions}\nColumn Condition: ${columnConditions}\nPlayer Tags:  ${playerTagValues.join(', ')}`);
+        }
+      }
+    },
      async fetchGlobalStats() {
-      try {
+      try {                            //REMOVE LOCALHOST BEFORE SENDING LIVE
         const response = await fetch('/api/global-stats'); // Replace with your actual API endpoint
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -106,13 +148,16 @@ export default {
         const data = await response.json();
         // Process the data as needed, e.g., store it in a component data property
 		this.globalData = data.frequencies;
+		this.statsFetched = true; 
       } catch (error) {
         console.error('Error fetching global stats:', error);
       }
     }, 
 	 answerCounts() { 
-		this.fetchGlobalStats();
-		return this.globalData;
+      if (!this.statsFetched) {
+        this.fetchGlobalStats();
+      }
+      return this.globalData;
 	},
     handleCloseMessage() {
       this.showGameOver = false;
@@ -123,23 +168,6 @@ export default {
 		if (answerKeyURL) { 
 			window.location.href = answerKeyURL; 
 		}
-	},
-	generateAnswerKeyURL() {
-	  // Make sure you have a valid this.answerKey
-	  if (!this.answerKey) {
-		console.error("this.answerKey is not defined.");
-		return "";
-	  }
-
-	  // Serialize answerKey into a JSON string
-	  const serializedAnswerKey = JSON.stringify(this.answerKey);
-	  
-	  // Create a URL with the serialized answerKey as a query parameter
-	  const baseUrl = 'http://127.0.0.1:3000:' // Replace with your actual URL
-	  const urlWithQuery = `${baseUrl}?data=${encodeURIComponent(serializedAnswerKey)}`;
-	  
-	  // Return the URL with the query parameter
-	  return urlWithQuery;
 	},
 
 	createTweetDraft() {
@@ -213,10 +241,14 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   z-index: 1000;
 }
-
+.zoomed-in .content {
+  max-height: 70vh; /* Set a maximum height to trigger scrolling */
+  overflow-y: auto; /* Enable vertical scrolling when content overflows */
+  /* Other styles for scrollable content */
+}
 .content {
   position: absolute;
   top: 50%;
@@ -230,6 +262,7 @@ export default {
   width: 500px;
   box-sizing: border-box;
 }
+
 
 /* Style the close button */
 .close-button {
@@ -372,5 +405,16 @@ export default {
     padding: 20px; /* Adjust the padding for smaller screens */
     max-width: 100%; /* Allow it to take the full width */
   }
+}
+.average-heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #333;
+}
+
+.average-score {
+  font-size: 18px;
+  color: #333;
 }
 </style>

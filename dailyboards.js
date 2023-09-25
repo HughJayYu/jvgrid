@@ -43,18 +43,18 @@ const cenamNations = [
 	'Bahamas', 'Costa Rica', 'Cuba', 'Dominican Republic', 'El Salvador', 'Honduras', 'Guatemala', 'Jamaica', 'Nicaragua', 'Puerto Rico', 'Trinidad'
 ];
 const oceaniaNations = [ 
-	'Australia', 'Hong Kong', 'India', 'Indonesia', 'Madagascar', 'Malaysia', 'Micronesia', 'New Zealand', 'Philippines', 'Singapore', 'South Korea', 'Taiwan', 'Thailand', 'Vietnam', 'China'
+	'Australia', 'Hong Kong', 'India', 'Indonesia', 'Madagascar', 'Malaysia', 'Micronesia', 'New Zealand', 'Philippines', 'Singapore', 'South Korea', 'Taiwan', 'Thailand', 'Vietnam', 'China', 'Guam'
 ];
 
 const conditionDescriptions = [
   'Player was on OrionRank 2022 (Top 150 + HMs)',
-  'Tag is six or more letters',
-  'Tag is four or less letters',
+  'Tag is six or more characters',
+  'Tag is four or less characters',
   'Player made Top 4 at a B/B+ Tier Event in 2023',
   'Player was on the PGR Smash 4 Top 100 All Time',
   'Tag starts with "s"',
   'Tag starts with a vowel',
-  'Tag starts with "t"',
+  'mains/secondaries a "Pokemon" character',
   'Player is from Japan',
   'Player was on PGRUv1 (Spring 2019, Top "51")',
   'Player was on PGRUv2 (Fall 2019, Top "51")',
@@ -71,7 +71,7 @@ const conditionDescriptions = [
   'mains/secondaries a "Fire Emblem" character', 
   'mains/secondaries Steve', 
   'mains/secondaries a "third party" character', 
-  'mains/secondaries a "DLC" character (Smash 4 DLC inclusive', 
+  'mains/secondaries a "DLC" character (Smash 4 DLC inclusive)', 
   'mains/secondaries a character that first appeared on the Game Boy Advance, Nintendo DS, or Nintendo 3DS',
   'Player was at Genesis 9',
   'Player was at Battle of BC 5',
@@ -108,8 +108,16 @@ const conditionDescriptions = [
   'Player mains/secondaries a superheavy (112 weight+)', 
   'Player is from Europe', 
   'Player is from North America', 
-  'Player is from Oceania, Southeast Asia, or non-Japan East Asia',
+  'Player is from Oceania, South Asia, Madagascar, Southeast Asia, or non-Japan East Asia',
   'Player was on OrionRank Eclipse 2021',
+  'Player has made Top 16 at any Genesis in Ultimate', 
+  'Player has made Top 16 at any Smash Con in Ultimate', 
+  'Player has made Top 16 at any Battle of BC/Port Priority in Ultimate', 
+  'Player has made Top 8 at any Kagaribi', 
+  'Player has made Top 16 at any "Makes Moves" tournament', 
+  'Player placed within Top 64 at Frostbite 2020', 
+  'Player was at Frostbite 2020', 
+  'Player has made Top 16 at any Glitch in Ultimate',
 ];
 const rowConditions = [
   {
@@ -153,9 +161,12 @@ const rowConditions = [
     sqlCall: '(LOWER(players.player_tag) LIKE "a%" OR LOWER(players.player_tag) LIKE "e%" OR LOWER(players.player_tag) LIKE "i%" OR LOWER(players.player_tag) LIKE "o%" OR LOWER(players.player_tag) LIKE "u%")',
   },
   {
-    condition: (player) => player.player_tag.toLowerCase().startsWith('t'),
+    condition: (player) => player.player_mains.some((main) => { 
+      const pokemonCharacters = ['Pikachu', 'Pichu', 'PT', 'Jigglypuff', 'Mewtwo', 'Lucario', 'Greninja', 'Incineroar'];
+      return pokemonCharacters.some(character => main.includes(character));
+    }), 
     description: conditionDescriptions[7],
-    sqlCall: 'LOWER(players.player_tag) LIKE "t%"',
+    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Pikachu%" OR player_main LIKE "%Pichu%" OR player_main LIKE "%PT%" OR player_main LIKE "%Jigglypuff%" OR player_main LIKE "%Mewtwo%" OR player_main LIKE "%Lucario%" OR player_main LIKE "%Greninja%" OR player_main LIKE "%Incineroar%")',
   },
   {
     condition: (player) => player.winOnLeoAcola == "TRUE",
@@ -267,6 +278,7 @@ const rowConditions = [
     description: conditionDescriptions[45],
     sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Duck Hunt","Ice Climbers","R.O.B","Piranha Plant","Peach","Bowser","Link","Zelda","Samus","Ridley","Simon","Pit","Palutena","Snake","Mega Man","Hero","Marth","Meta Knight"))`,
   },
+/*
   {
     condition: (player) => (
       player.player_mains.includes('Captain Falcon') ||
@@ -296,6 +308,7 @@ const rowConditions = [
     description: conditionDescriptions[47],
     sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Daisy","Dr. Mario","Kirby","King Dedede","PT","Pikachu","Jigglypuff","Mewtwo","Wario","Pichu"))`,
   }, 
+*/
   {
     condition: (player) => player.evo19place > 0,
     description: conditionDescriptions[54],
@@ -331,8 +344,28 @@ const rowConditions = [
     description: conditionDescriptions[58],
     sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Bowser","King K.Rool","Donkey Kong","King Dedede","Ganondorf","Incineroar","PT","Kazuya","Piranha Plant"))`,
   },
+  {
+    condition: (player) => player.makesmovesTop16 == 'TRUE',
+    description: conditionDescriptions[67],
+    sqlCall: 'makesmovesTop16 = "TRUE"',
+  },     
+  {
+    condition: (player) => player.fb20place > 0 && player.fb20place < 64,
+    description: conditionDescriptions[68],
+	sqlCall: 'fb20place > 0 AND fb20place < 64',
+  },  
+  {
+    condition: (player) => player.glitchTop16 == 'TRUE',
+    description: conditionDescriptions[65],
+    sqlCall: 'glitchTop16 = "TRUE"',
+  },   
 ];
 const columnConditions = [
+  {
+    condition: (player) => player.fb20place > 0,
+    description: conditionDescriptions[69],
+	sqlCall: 'fb20place > 0',
+  },  
   {
     condition: (player) => player.player_mains.includes('Steve'),
     description: conditionDescriptions[22],
@@ -461,11 +494,11 @@ const columnConditions = [
   },
   {
     condition: (player) => { 
-      const highTierCharacters = ['Yoshi', 'Mario', 'Lucina', 'Pokémon Trainer', 'Wario', 'Samus', 'Dark Samus', 'Zero Suit Samus', 'Sephiroth', 'Olimar', 'Young Link', 'Terry', 'Sora', 'Byleth', 'Greninja', 'Ken', 'Sheik', 'Ryu', 'Mii Brawler', 'Mega Man'];
+      const highTierCharacters = ['Yoshi', 'Mario', 'Lucina', 'PT', 'Wario', 'Samus', 'Dark Samus', 'Zero Suit Samus', 'Sephiroth', 'Olimar', 'Young Link', 'Terry', 'Sora', 'Byleth', 'Greninja', 'Ken', 'Sheik', 'Ryu', 'Mii Brawler', 'Mega Man'];
       return player.player_mains.some((main) => highTierCharacters.includes(main));
     }, 
     description: conditionDescriptions[38],
-    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Yoshi%" OR player_main LIKE "%Mario%" OR player_main LIKE "%Lucina%" OR player_main LIKE "%Pokémon Trainer%" OR player_main LIKE "%Wario%" OR player_main LIKE "%Samus%" OR player_main LIKE "%Dark Samus%" OR player_main LIKE "%Zero Suit Samus%" OR player_main LIKE "%Sephiroth%" OR player_main LIKE "%Olimar%" OR player_main LIKE "%Young Link%" OR player_main LIKE "%Terry%" OR player_main LIKE "%Sora%" OR player_main LIKE "%Byleth%" OR player_main LIKE "%Greninja%" OR player_main LIKE "%Ken%" OR player_main LIKE "%Sheik%" OR player_main LIKE "%Ryu%" OR player_main LIKE "%Mii Brawler%" OR player_main LIKE "%Mega Man%")',
+    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Yoshi%" OR player_main LIKE "%Mario%" OR player_main LIKE "%Lucina%" OR player_main LIKE "%PT%" OR player_main LIKE "%Wario%" OR player_main LIKE "%Samus%" OR player_main LIKE "%Dark Samus%" OR player_main LIKE "%Zero Suit Samus%" OR player_main LIKE "%Sephiroth%" OR player_main LIKE "%Olimar%" OR player_main LIKE "%Young Link%" OR player_main LIKE "%Terry%" OR player_main LIKE "%Sora%" OR player_main LIKE "%Byleth%" OR player_main LIKE "%Greninja%" OR player_main LIKE "%Ken%" OR player_main LIKE "%Sheik%" OR player_main LIKE "%Ryu%" OR player_main LIKE "%Mii Brawler%" OR player_main LIKE "%Mega Man%")',
   },
   {
     condition: (player) => { 
@@ -489,6 +522,7 @@ const columnConditions = [
     description: conditionDescriptions[41],
     sqlCall: 'nationality != "Japan" AND nationality != "Mexico" AND nationality != "United States"',
   },
+/*
   {
     condition: (player) => (
       player.player_mains.includes('Wolf') ||
@@ -501,6 +535,7 @@ const columnConditions = [
     description: conditionDescriptions[48],
     sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Wolf","Young Link","Sheik","Ganondorf","Banjo","Villager"))`,
   },
+*/
   {
     condition: (player) => (
       player.player_mains.includes('Olimar') ||
@@ -620,11 +655,32 @@ const columnConditions = [
     player.nationality === 'Taiwan' ||
     player.nationality === 'Thailand' ||
     player.nationality === 'Vietnam' || 
-	player.nationality === 'China' 
+	player.nationality === 'China' || 
+	player.nationality === 'Guam'
   ),
     description: conditionDescriptions[61],
-    sqlCall: '(nationality = "Australia" OR nationality = "China" OR nationality = "Hong Kong" OR nationality = "India" OR nationality = "Indonesia" OR nationality = "Madagascar" OR nationality = "Malaysia" OR nationality = "Micronesia" OR nationality = "New Zealand" OR nationality = "Philippines" OR nationality = "Singapore" OR nationality = "South Korea" OR nationality = "Taiwan" OR nationality = "Thailand" OR nationality = "Vietnam")',
+    sqlCall: '(nationality = "Australia" OR nationality = "China" OR nationality = "Hong Kong" OR nationality = "India" OR nationality = "Indonesia" OR nationality = "Madagascar" OR nationality = "Malaysia" OR nationality = "Micronesia" OR nationality = "New Zealand" OR nationality = "Philippines" OR nationality = "Singapore" OR nationality = "South Korea" OR nationality = "Taiwan" OR nationality = "Thailand" OR nationality = "Vietnam" OR nationality = "Guam")',
   },
+  {
+    condition: (player) => player.genesisTop16 == 'TRUE',
+    description: conditionDescriptions[63],
+    sqlCall: 'genesisTop16 = "TRUE"',
+  },   
+   {
+    condition: (player) => player.sscTop16 == 'TRUE',
+    description: conditionDescriptions[64],
+    sqlCall: 'sscTop16 = "TRUE"',
+  },    
+  {
+    condition: (player) => player.bobcppTop16 == 'TRUE',
+    description: conditionDescriptions[65],
+    sqlCall: 'bobcppTop16 = "TRUE"',
+  },   
+  {
+    condition: (player) => player.kagTop8 == 'TRUE',
+    description: conditionDescriptions[66],
+    sqlCall: 'kagTop8 = "TRUE"',
+  },   
 ];
 
 async function fetchGrid() {
@@ -680,7 +736,7 @@ async function fetchGrid() {
 		const encodedSearchQuery = encodeURIComponent(searchQuery); 	
       // MAKE SURE TO ADD THE http://localhost:8081 WHEN YOU REGENERATE BOARDS
       axiosPromises.push(
-        axios.get(`http://localhost:8081/api/searchcondition?searchQuery=${encodedSearchQuery}`)
+        axios.get(`/api/searchcondition?searchQuery=${encodedSearchQuery}`)
       );
     }
   }
@@ -743,7 +799,8 @@ async function fetchGrid() {
 		possibleAnswers[0].includes(1) || possibleAnswers[0].includes(2) || possibleAnswers[1].includes(1) || 
 		possibleAnswers[1].includes(2) || possibleAnswers[2].includes(1) || possibleAnswers[2].includes(2) ||
 		possibleAnswers[0].includes(3) || possibleAnswers[1].includes(3) || possibleAnswers[2].includes(3) ||
-		possibleAnswers[0].includes(4) || possibleAnswers[1].includes[4] || possibleAnswers[2].includes(4)
+		possibleAnswers[0].includes(4) || possibleAnswers[1].includes[4] || possibleAnswers[2].includes(4) || 
+		possibleAnswers[0].includes(5) || possibleAnswers[1].includes[5] || possibleAnswers[2].includes(5)
 		
 		)) {
             // Insert data into the database here

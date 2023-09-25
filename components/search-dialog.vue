@@ -76,7 +76,7 @@ export default {
 		this.highlightedResult = null; 
 	},
     async search() {
-      try {
+      try { //REMOVE LOCALHOST
         const response = await axios.get(`/api/search?query=${this.searchQuery}`);
         this.searchResults = response.data;
       } catch (error) {

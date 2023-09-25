@@ -50,7 +50,14 @@ function createTable(db, db2){
 		orionrank22		BOOL, 
 		orEclipse		BOOL,
 		s4top100		BOOL, 
-		majorWinner		BOOL
+		majorWinner		BOOL,
+		glitchTop16		BOOL,
+		genesisTop16	BOOL, 
+		sscTop16		BOOL, 
+		bobcppTop16		BOOL, 
+		kagTop8			BOOL, 
+		makesmovesTop16	BOOL, 
+		fb20place		INT
 	)
 	`);
 	db2.exec(`

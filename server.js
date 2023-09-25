@@ -21,10 +21,11 @@ app.use('/api', searchRoute);
 
 // Initialize storedBoardData
 let storedBoardData = null;
-let boardID = 6;
+let boardID = 14;
 //BOARD GENERATION COMMENT STARTS HERE
+
 const db3 = new sqlite3.Database('game_boards.db');
-db3.get('SELECT * from daily_data WHERE day = 5', [], (err, row) => {
+db3.get('SELECT * from daily_data WHERE day = 13', [], (err, row) => {
 	if (err) { 
 		console.error('Error retrieving initial board:', err); 
 	} else { 
@@ -88,7 +89,7 @@ app.post('/api/send-rarity-data', (req, res) => {
   const rowCondition = deserializeRowOrColumnCondition(getData.rowCondition);
   const columnCondition = deserializeRowOrColumnCondition(getData.columnCondition);
   const rarityPercentage = calculateRarityScores(rowCondition, columnCondition, getData.player);
-  console.log(rarityPercentage);
+  console.log("Row Condition: " + rowCondition.description + " Column Condition: " + columnCondition.description + " Player Tag: " + getData.player.player_tag + " Percentage: " + rarityPercentage);
   res.json({ rarityPercentage });
 });
 

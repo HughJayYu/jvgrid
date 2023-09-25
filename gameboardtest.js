@@ -13,8 +13,8 @@ db.all(query, [], (err, rows) => {
   } else {
     // Print the retrieved data
     console.log('Retrieved data from daily_data table:');
-	console.log(rows[0].randomRowConditions);
-	console.log(rows[0].randomColumnConditions);
+	console.log(rows[4].randomRowConditions);
+	console.log(rows[4].randomColumnConditions);
     rows.forEach((row) => {
       console.log(row.possibleAnswers);
     });

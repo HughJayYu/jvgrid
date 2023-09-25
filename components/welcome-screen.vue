@@ -1,6 +1,6 @@
 <template>
-	<div class="welcome-screen" v-if="showWelcome"> 
-		<div class="content">
+	<div class="welcome-screen" v-if="showWelcome" :class="{ 'zoomed-in': isZoomedIn }"> 
+		<div class="content" ref="content">
 			<h1>Welcome to the JVGrid!</h1>
 			<p> This website is a version of the <a href = "https://www.immaculategrid.com/">Immaculate Grid</a> designed for competitive <i>Super Smash Bros. Ultimate</i>. If you have any insight or bugs to report, please reach out to me at <a href = "https://twitter.com/tradewarhj">Twitter</a> - thank you!
 			</p>
@@ -8,10 +8,10 @@
 			<p> Select a player for each cell that matches the criteria for that cell's row and column. <br>
 			You have nine guesses to fill out the grid. <br> 
 			Each guess, correct or incorrect, counts as a guess. <br>
-			There is a new grid every day at 9:00am ET. <br>
+			There is a new grid every day at 9:00am UTC (4:00am CST). <br>
 			A player cannot be used twice. <br>
 			<strong>For the most part, the database is limited to players that have qualified for OrionRank/UltRank/LumiRank.</strong> <br>
-			<strong><a href = "https://docs.google.com/spreadsheets/d/1xFEP9ahm6jSNwKLxX7gqvBKKpetd1BiPze1-YzBei_w/edit#gid=0">Database</a> was last updated 9/12</strong> (Riptide/Jingi2 weekend!)
+			<strong><a href = "https://docs.google.com/spreadsheets/d/1xFEP9ahm6jSNwKLxX7gqvBKKpetd1BiPze1-YzBei_w/edit#gid=0">Database</a> was last updated 9/25</strong> (Delta/Cirque Du CFL 2 weekend!)
 			More information on the categories, along with the full database, can be found <a href = "https://docs.google.com/document/d/1uX4QSPpJR9JHm8RFcN3TX6TSxNoYs1nGJFYd4M-4LzA/edit">here</a>. <br>
 			A player can main multiple characters; the search icon is just meant to serve as an identifier (Leon/LeoN).<br>
 			Shuton, for example, qualifies as both a Olimar and an Aegis player. <br>
@@ -24,16 +24,26 @@
 export default{
   data () {
     return {
-      showWelcome: false
+      showWelcome: false,
+	  isZoomedIn: false,
     }
   },
   mounted () {
-      this.showWelcome = true
+      this.showWelcome = true;
+	  this.detectZoom(); 
+	  window.addEventListener('resize', this.detectZoom); 
   },
   methods: {
     closeWelcome () {
-      this.showWelcome = false
-    }
+      this.showWelcome = false;
+    }, 
+	 detectZoom() { 
+		if (window.innerWidth !== document.documentElement.clientWidth) {
+			this.isZoomedIn = true; 
+		} else { 
+			this.isZoomedIn = false; 
+		}
+	},
   }
   }
 </script>
@@ -48,8 +58,9 @@ export default{
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   z-index: 1000;
+  overflow: hidden; /* Hide content overflow */
 }
 
 .content {
@@ -62,6 +73,11 @@ export default{
   text-align: center;
 }
 
+.zoomed-in .content {
+  max-height: 70vh; /* Set a maximum height to trigger scrolling */
+  overflow-y: auto; /* Enable vertical scrolling when content overflows */
+  /* Other styles for scrollable content */
+}
 .content h1 {
   color: #000;
   margin-bottom: 20px;
@@ -105,4 +121,5 @@ export default{
     max-width: 100%; /* Allow it to take the full width */
   }
 }
+
 </style>
