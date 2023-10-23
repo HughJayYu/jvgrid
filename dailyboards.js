@@ -75,10 +75,10 @@ const conditionDescriptions = [
   'mains/secondaries a character that first appeared on the Game Boy Advance, Nintendo DS, or Nintendo 3DS',
   'Player was at Genesis 9',
   'Player was at Battle of BC 5',
-  'Player was at Kagaribi 10',
+  'Player was at Kagaribi 10 (May 23)',
   'Player placed within Top 64 of Genesis 9', 
   'Player placed within Top 64 of Battle of BC 5',
-  'Player placed within Top 64 of Kagaribi 10',
+  'Player placed within Top 64 of Kagaribi 10 (May 23)',
   'Player mains/secondaries a character that debuted in Smash 64',
   'Player mains/secondaries a character that debuted in Melee',
   'Player mains/secondaries a character that debuted in Brawl',
@@ -118,6 +118,16 @@ const conditionDescriptions = [
   'Player placed within Top 64 at Frostbite 2020', 
   'Player was at Frostbite 2020', 
   'Player has made Top 16 at any Glitch in Ultimate',
+  'Player made Top 64 at Kagaribi 11 (Fall 23)', 
+  'Player was at Kagaribi 11 (Fall 23)', 
+  'Player made Top 64 at either Kagaribi 10 or 11', 
+  'Tag is eight or more characters',
+  'Tag contains a numeric in it (0-9)', 
+  'Player mains Fox, Marth, Jigglypuff, Falco, Sheik, Captain Falcon, Peach, or Yoshi', 
+  'Player mains Meta Knight, Ice Climbers, Olimar, Diddy Kong, Marth, Snake, or Falco', 
+  'Player mains Bayonetta, Cloud, Diddy Kong, Sheik, Rosalina, or Zero Suit Samus',
+  'Player mains Mewtwo, Pit, Lucas, or Diddy Kong', 
+  'Player mains a Fighters Pass 1 character', 
 ];
 const rowConditions = [
   {
@@ -134,6 +144,16 @@ const rowConditions = [
     condition: (player) => player.player_tag.length >= 6,
     description: conditionDescriptions[1],
     sqlCall: 'LENGTH(players.player_tag) >= 6',
+  },
+  {
+    condition: (player) => player.player_tag.length >= 8,
+    description: conditionDescriptions[74],
+    sqlCall: 'LENGTH(players.player_tag) >= 8',
+  },
+  {
+	condition: (player) => (player.player_tag.includes('0') || player.player_tag.includes('1') || player.player_tag.includes('2') || player.player_tag.includes('3') || player.player_tag.includes('4') || player.player_tag.includes('5') || player.player_tag.includes('6') || player.player_tag.includes('7') || player.player_tag.includes('8') || player.player_tag.includes('9')),
+    description: conditionDescriptions[75],
+    sqlCall: '(LOWER(players.player_tag) LIKE "%0%" OR LOWER(players.player_tag) LIKE "%1%" OR LOWER(players.player_tag) LIKE "%2%" OR LOWER(players.player_tag) LIKE "%3%" OR LOWER(players.player_tag) LIKE "%4%" OR LOWER(players.player_tag) LIKE "%5%" OR LOWER(players.player_tag) LIKE "%6%" OR LOWER(players.player_tag) LIKE "%7%" OR LOWER(players.player_tag) LIKE "%8%" OR LOWER(players.player_tag) LIKE "%9%")',
   },
   {
     condition: (player) => player.player_tag.length <= 4,
@@ -356,9 +376,35 @@ const rowConditions = [
   },  
   {
     condition: (player) => player.glitchTop16 == 'TRUE',
-    description: conditionDescriptions[65],
+    description: conditionDescriptions[70],
     sqlCall: 'glitchTop16 = "TRUE"',
   },   
+  {
+    condition: (player) => player.kag11place > 0,
+    description: conditionDescriptions[72],
+    sqlCall: 'kag11place > 0',
+  },
+  {
+    condition: (player) => (
+      ['Bayonetta', 'Cloud', 'Diddy Kong', 'Sheik', 'Rosalina', 'Zero Suit Samus'].some(main => player.player_mains.includes(main))
+    ),
+    description: conditionDescriptions[78],
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Bayonetta", "Cloud", "Diddy Kong", "Sheik", "Rosalina", "Zero Suit Samus"))`,
+  },
+  {
+    condition: (player) => (
+      ['Mewtwo', 'Pit', 'Lucas', 'Diddy Kong'].some(main => player.player_mains.includes(main))
+    ),
+    description: conditionDescriptions[79],
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Mewtwo", "Pit", "Lucas", "Diddy Kong"))`,
+  },
+  {
+    condition: (player) => (
+      ['Joker', 'Hero', 'Banjo', 'Terry', 'Byleth'].some(main => player.player_mains.includes(main))
+    ),
+    description: conditionDescriptions[80],
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Joker", "Hero", "Banjo", "Terry", "Byleth"))`,
+  },
 ];
 const columnConditions = [
   {
@@ -412,14 +458,14 @@ const columnConditions = [
     sqlCall: 'nationality = "United States"',
   },
   {
-    condition: (player) => (player.ssc23place > 0 && player.ssc23place < 32) || (player.kag10place > 0 && player.kag10place < 32) || (player.genesis9place > 0 && player.genesis9place < 32) || (player.bobc5place > 0 && player.bobc5place < 32),
+    condition: (player) => (player.ssc23place > 0 && player.ssc23place < 32) || (player.kag10place > 0 && player.kag10place < 32) || (player.genesis9place > 0 && player.genesis9place < 32) || (player.bobc5place > 0 && player.bobc5place < 32) || (player.kag11place > 0 && player.kag11place < 32),
     description: conditionDescriptions[16],
-    sqlCall: '((ssc23place > 0 AND ssc23place < 32) OR (kag10place > 0 AND kag10place < 32) OR (genesis9place > 0 AND genesis9place < 32) OR (bobc5place > 0 AND bobc5place < 32))',
+    sqlCall: '((ssc23place > 0 AND ssc23place < 32) OR (kag10place > 0 AND kag10place < 32) OR (genesis9place > 0 AND genesis9place < 32) OR (bobc5place > 0 AND bobc5place < 32) OR (kag11place > 0 AND kag11place < 32))',
   },
   {
-    condition: (player) => (player.ssc23place > 0 && player.ssc23place < 16) || (player.kag10place > 0 && player.kag10place < 16) || (player.genesis9place > 0 && player.genesis9place < 16) || (player.bobc5place > 0 && player.bobc5place < 16),
+    condition: (player) => (player.ssc23place > 0 && player.ssc23place < 16) || (player.kag10place > 0 && player.kag10place < 16) || (player.genesis9place > 0 && player.genesis9place < 16) || (player.bobc5place > 0 && player.bobc5place < 16) || (player.kag11place > 0 && player.kag11place < 16),
     description: conditionDescriptions[17],
-    sqlCall: '((ssc23place > 0 AND ssc23place < 16) OR (kag10place > 0 AND kag10place < 16) OR (genesis9place > 0 AND genesis9place < 16) OR (bobc5place > 0 AND bobc5place < 16))',
+    sqlCall: '((ssc23place > 0 AND ssc23place < 16) OR (kag10place > 0 AND kag10place < 16) OR (genesis9place > 0 AND genesis9place < 16) OR (bobc5place > 0 AND bobc5place < 16) OR (kag11place < 0 AND kag11place < 16))',
   },
   {
     condition: (player) => player.player_mains.some((main) => {
@@ -478,11 +524,11 @@ const columnConditions = [
   },
   {
     condition: (player) => player.player_mains.some((main) => {
-      const ultimateCharacters = ['Inkling', 'Ridley', 'Simon', 'Richter', 'King K.Rool', 'Isabelle', 'Incineroar', 'Dark Samus', 'Daisy', 'Chrom', 'Piranha Plant', 'Joker', 'Hero', 'Banjo', 'Terry', 'Byleth', 'Min Min', 'Steve', 'Sephiroth', 'Pyra/Mythra', 'Kazuya', 'Sora', 'Ken'];
+      const ultimateCharacters = ['Inkling', 'Ridley', 'Simon', 'Richter', 'King K.Rool', 'Isabelle', 'Incineroar', 'Dark Samus', 'Daisy', 'Chrom', 'Piranha Plant', 'Joker', 'Hero', 'Banjo', 'Terry', 'Byleth', 'Min Min', 'Steve', 'Sephiroth', 'Aegis', 'Kazuya', 'Sora', 'Ken'];
       return ultimateCharacters.includes(main);
     }),
     description: conditionDescriptions[36],
-    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Inkling%" OR player_main LIKE "%Ridley%" OR player_main LIKE "%Simon%" OR player_main LIKE "%Richter%" OR player_main LIKE "%King K.Rool%" OR player_main LIKE "%Isabelle%" OR player_main LIKE "%Incineroar%" OR player_main LIKE "%Dark Samus%" OR player_main LIKE "%Daisy%" OR player_main LIKE "%Chrom%" OR player_main LIKE "%Piranha Plant%" OR player_main LIKE "%Joker%" OR player_main LIKE "%Hero%" OR player_main LIKE "%Banjo%" OR player_main LIKE "%Terry%" OR player_main LIKE "%Byleth%" OR player_main LIKE "%Min Min%" OR player_main LIKE "%Steve%" OR player_main LIKE "%Sephiroth%" OR player_main LIKE "%Pyra/Mythra%" OR player_main LIKE "%Kazuya%" OR player_main LIKE "%Sora%" OR player_main LIKE "%Ken%")',
+    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Inkling%" OR player_main LIKE "%Ridley%" OR player_main LIKE "%Simon%" OR player_main LIKE "%Richter%" OR player_main LIKE "%King K.Rool%" OR player_main LIKE "%Isabelle%" OR player_main LIKE "%Incineroar%" OR player_main LIKE "%Dark Samus%" OR player_main LIKE "%Daisy%" OR player_main LIKE "%Chrom%" OR player_main LIKE "%Piranha Plant%" OR player_main LIKE "%Joker%" OR player_main LIKE "%Hero%" OR player_main LIKE "%Banjo%" OR player_main LIKE "%Terry%" OR player_main LIKE "%Byleth%" OR player_main LIKE "%Min Min%" OR player_main LIKE "%Steve%" OR player_main LIKE "%Sephiroth%" OR player_main LIKE "%Aegis%" OR player_main LIKE "%Kazuya%" OR player_main LIKE "%Sora%" OR player_main LIKE "%Ken%")',
   },
   {
     condition: (player) => { 
@@ -681,6 +727,30 @@ const columnConditions = [
     description: conditionDescriptions[66],
     sqlCall: 'kagTop8 = "TRUE"',
   },   
+  {
+    condition: (player) => (player.kag11place > 0 && player.kag11place < 64),
+    description: conditionDescriptions[71],
+    sqlCall: 'kag11place > 0 AND kag11place < 64',
+  },   
+  {
+    condition: (player) => (player.kag10place > 0 && player.kag10place <= 64) || (player.kag11place > 0 && player.kag10place <= 64),
+    description: conditionDescriptions[73],
+    sqlCall: '(kag10place > 0 AND kag10place <= 64) OR (kag11place > 0 AND kag10place < 64)',
+  },  
+  {
+    condition: (player) => (
+      ['Fox', 'Marth', 'Jigglypuff', 'Falco', 'Sheik', 'Captain Falcon', 'Peach', 'Yoshi'].some(main => player.player_mains.includes(main))
+    ),
+    description: conditionDescriptions[76], 
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Fox", "Marth", "Jigglypuff", "Falco", "Sheik", "Captain Falcon", "Peach", "Yoshi"))`,
+  },
+  {
+    condition: (player) => (
+      ['Meta Knight', 'Ice Climbers', 'Olimar', 'Diddy Kong', 'Marth', 'Snake', 'Falco'].some(main => player.player_mains.includes(main))
+    ),
+    description: conditionDescriptions[77],
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Meta Knight", "Ice Climbers", "Olimar", "Diddy Kong", "Marth", "Snake", "Falco"))`,
+  },  
 ];
 
 async function fetchGrid() {
@@ -736,7 +806,7 @@ async function fetchGrid() {
 		const encodedSearchQuery = encodeURIComponent(searchQuery); 	
       // MAKE SURE TO ADD THE http://localhost:8081 WHEN YOU REGENERATE BOARDS
       axiosPromises.push(
-        axios.get(`/api/searchcondition?searchQuery=${encodedSearchQuery}`)
+        axios.get(`http://localhost:8081/api/searchcondition?searchQuery=${encodedSearchQuery}`)
       );
     }
   }

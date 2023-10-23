@@ -46,7 +46,7 @@
         v-for="(count, index) in globalData"
         :key="index"
         class="bar"
-        :style="{ height: `${count * 10}px` }"
+        :style="{ height: `${maxBarHeight(count)}px` }"
       >
         {{ index }}
       </div>
@@ -87,6 +87,10 @@ export default {
 	window.addEventListener('resize', this.detectZoom); 
   },
   computed: { 
+	maxBarHeight() { 
+		const maxHeight = 100; 
+		return (count) => (count * 10 > maxHeight ? maxHeight : count * 10); 
+	}, 
 	copyButtonText() { 
 		return this.isCopied ? "Copied to clipboard!" : "Copy"; 
 	},

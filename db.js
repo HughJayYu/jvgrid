@@ -57,7 +57,8 @@ function createTable(db, db2){
 		bobcppTop16		BOOL, 
 		kagTop8			BOOL, 
 		makesmovesTop16	BOOL, 
-		fb20place		INT
+		fb20place		INT,
+		kag11place		INT
 	)
 	`);
 	db2.exec(`

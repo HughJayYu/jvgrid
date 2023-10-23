@@ -303,7 +303,8 @@ export default {
 	  bobcppTop16: value.bobcppTop16,
 	  kagTop8: value.kagTop8, 
 	  makesmovesTop16: value.makesmovesTop16,
-	  fb20place: value.fb20place,	  
+	  fb20place: value.fb20place,	
+	  kag11place: value.kag11place,
     };
 
     // Check if both row and column conditions are met

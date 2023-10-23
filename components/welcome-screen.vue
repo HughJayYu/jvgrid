@@ -10,8 +10,8 @@
 			Each guess, correct or incorrect, counts as a guess. <br>
 			There is a new grid every day at 9:00am UTC (4:00am CST). <br>
 			A player cannot be used twice. <br>
-			<strong>For the most part, the database is limited to players that have qualified for OrionRank/UltRank/LumiRank.</strong> <br>
-			<strong><a href = "https://docs.google.com/spreadsheets/d/1xFEP9ahm6jSNwKLxX7gqvBKKpetd1BiPze1-YzBei_w/edit#gid=0">Database</a> was last updated 9/25</strong> (Delta/Cirque Du CFL 2 weekend!)
+			<strong>The database is manually scraped, and relatively limited.</strong> If you believe I've forgotten a player of note, please submit <a href = "https://forms.gle/uAgGM34LhGcb2mfv7">an audit.</a><br>
+			<strong><a href = "https://docs.google.com/spreadsheets/d/1xFEP9ahm6jSNwKLxX7gqvBKKpetd1BiPze1-YzBei_w/edit#gid=0">Database</a> was last updated 10/23</strong> (Big House/Itsukushima weekend!)
 			More information on the categories, along with the full database, can be found <a href = "https://docs.google.com/document/d/1uX4QSPpJR9JHm8RFcN3TX6TSxNoYs1nGJFYd4M-4LzA/edit">here</a>. <br>
 			A player can main multiple characters; the search icon is just meant to serve as an identifier (Leon/LeoN).<br>
 			Shuton, for example, qualifies as both a Olimar and an Aegis player. <br>
