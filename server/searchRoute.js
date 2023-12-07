@@ -84,6 +84,7 @@ router.get('/search', (req, res) => {
 		  makesmovesTop16: player.makesmovesTop16,
 		  fb20place: player.fb20place,
 		  kag11place: player.kag11place,
+		  pp8place: player.pp8place,
         };
       });
 
@@ -99,7 +100,7 @@ router.get('/search', (req, res) => {
 router.get('/searchcondition', (req, res) => {
   const searchQuery = req.query.searchQuery;
   const categories = ['nationality', 'pgru1', 'pgru2', 'ultrank22', 'lumirankmid23', 'ssc23place', 'kag10place', 'genesis9place', 'bobc5place', 'supermajortop8', 'majortop8', 'btop4', 'winOnLeoAcola', 
-  'evo19place', 'orionrank22', 'orEclipse', 's4top100', 'majorWinner', 'glitchTop16', 'genesisTop16', 'sscTop16', 'bobcppTop16', 'kagTop8', 'makesmovesTop16', 'fb20place', 'kag11place'];
+  'evo19place', 'orionrank22', 'orEclipse', 's4top100', 'majorWinner', 'glitchTop16', 'genesisTop16', 'sscTop16', 'bobcppTop16', 'kagTop8', 'makesmovesTop16', 'fb20place', 'kag11place', 'pp8place'];
   // Open connections to your SQLite3 databases
   const db = new sqlite3.Database('testdb.db');
   db.serialize(() => { 
@@ -161,6 +162,7 @@ router.get('/searchcondition', (req, res) => {
 		  makesmovesTop16: player.makesmovesTop16,
 		  fb20place: player.fb20place,
 		  kag11place: player.kag11place,
+		  pp8place: player.pp8place,
         };
       });
 

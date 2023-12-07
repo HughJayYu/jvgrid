@@ -128,6 +128,9 @@ const conditionDescriptions = [
   'Player mains Bayonetta, Cloud, Diddy Kong, Sheik, Rosalina, or Zero Suit Samus',
   'Player mains Mewtwo, Pit, Lucas, or Diddy Kong', 
   'Player mains a Fighters Pass 1 character', 
+  'Player attended Port Priority 8',
+  'Player placed within Top 64 at Port Priority 8', 
+  'Player placed within Top 32 at Port Priority 8', 
 ];
 const rowConditions = [
   {
@@ -404,6 +407,11 @@ const rowConditions = [
     ),
     description: conditionDescriptions[80],
     sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Joker", "Hero", "Banjo", "Terry", "Byleth"))`,
+  },
+  {
+    condition: (player) => player.pp8place > 0,
+    description: conditionDescriptions[81],
+    sqlCall: 'pp8place > 0',
   },
 ];
 const columnConditions = [
@@ -735,7 +743,7 @@ const columnConditions = [
   {
     condition: (player) => (player.kag10place > 0 && player.kag10place <= 64) || (player.kag11place > 0 && player.kag10place <= 64),
     description: conditionDescriptions[73],
-    sqlCall: '(kag10place > 0 AND kag10place <= 64) OR (kag11place > 0 AND kag10place < 64)',
+    sqlCall: '((kag10place > 0 AND kag10place <= 64) OR (kag11place > 0 AND kag10place < 64))',
   },  
   {
     condition: (player) => (
@@ -751,6 +759,16 @@ const columnConditions = [
     description: conditionDescriptions[77],
     sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main IN ("Meta Knight", "Ice Climbers", "Olimar", "Diddy Kong", "Marth", "Snake", "Falco"))`,
   },  
+  {
+    condition: (player) => (player.pp8place > 0 && player.pp8place < 64),
+    description: conditionDescriptions[82],
+    sqlCall: 'pp8place > 0 AND pp8place < 64',
+  },   
+  {
+    condition: (player) => (player.pp8place > 0 && player.pp8place < 32),
+    description: conditionDescriptions[83],
+    sqlCall: 'pp8place > 0 AND pp8place < 32',
+  },     
 ];
 
 async function fetchGrid() {

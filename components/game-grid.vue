@@ -305,6 +305,7 @@ export default {
 	  makesmovesTop16: value.makesmovesTop16,
 	  fb20place: value.fb20place,	
 	  kag11place: value.kag11place,
+	  pp8place: value.pp8place,
     };
 
     // Check if both row and column conditions are met

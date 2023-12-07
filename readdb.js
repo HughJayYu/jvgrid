@@ -28,7 +28,7 @@ db.serialize(() => {
 db.serialize(() => {
   db.each(`SELECT * FROM players WHERE player_tag LIKE ?`, test, function (err, row) {
 	  if (err) throw err; 
-	  console.log(row.player_tag + "\t" + row.ssc23place); 
+	  console.log(row.player_tag + "\t" + row.pp8place); 
   }); 
 });
 

@@ -21,11 +21,11 @@ app.use('/api', searchRoute);
 
 // Initialize storedBoardData
 let storedBoardData = null;
-let boardID = 42;
+let boardID = 87;
 //BOARD GENERATION COMMENT STARTS HERE
 
 const db3 = new sqlite3.Database('game_boards.db');
-db3.get('SELECT * from daily_data WHERE day = 41', [], (err, row) => {
+db3.get('SELECT * from daily_data WHERE day = 86', [], (err, row) => {
 	if (err) { 
 		console.error('Error retrieving initial board:', err); 
 	} else { 
