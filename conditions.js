@@ -693,24 +693,24 @@ const columnConditions = [
       return player.player_mains.some((main) => highTierCharacters.includes(main));
     }, 
     description: conditionDescriptions[72],
-    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE ' + highTierCharacters.map(char => `player_main LIKE "%${char}%"`).join(' OR ') + ')',
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Kazuya%" OR player_main LIKE "%Min Min%" OR player_main LIKE "%Cloud%" OR player_main LIKE "%Yoshi%" OR player_main LIKE "%Samus%" OR player_main LIKE "%Dark Samus%" OR player_main LIKE "%Palutena%" OR player_main LIKE "%Pikachu%" OR player_main LIKE "%Sora%" OR player_main LIKE "%Roy%" OR player_main LIKE "%Wario%" OR player_main LIKE "%Wolf%" OR player_main LIKE "%Mario%" OR player_main LIKE "%Pac-Man%" OR player_main LIKE "%PT%" OR player_main LIKE "%Shulk%" OR player_main LIKE "%Bayonetta%" OR player_main LIKE "%Corrin%" OR player_main LIKE "%Lucina%" OR player_main LIKE "%Terry%" OR player_main LIKE "%Zero Suit Samus%")`,
   },
   {
     condition: (player) => { 
       const midTierCharacters = ['Sheik', 'Ryu', 'Olimar', 'Greninja', 'Falco', 'Mii Brawler', 'Sephiroth', 'Young Link', 'Luigi', 'Captain Falcon', 'Pit', 'Dark Pit', 'Byleth', 'Rosalina', 'Hero', 'Ken', 'Toon Link', 'Ness', 'Mega Man', 'Inkling'];
       return player.player_mains.some((main) => midTierCharacters.includes(main));
     }, 
-    description: conditionDescriptions[73], 
-    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE ' + midTierCharacters.map(char => `player_main LIKE "%${char}%"`).join(' OR ') + ')',
-  },
-  {
-    condition: (player) => { 
-      const lowTierCharacters = ["Mewtwo", "Robin", "Donkey Kong", "Isabelle", "Bowser Jr", "Ike", "Villager", "Zelda", "Simon", "Richter", "Kirby", "Mii Swordfighter", "Piranha Plant", "Dr. Mario", "King Dedede", "King K.Rool", "Little Mac", "Ganondorf"];
-      return player.player_mains.some((main) => lowTierCharacters.includes(main));
-    }, 
-    description: conditionDescriptions[74],
-    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE ' + lowTierCharacters.map(char => `player_main LIKE "%${char}%"`).join(' OR ') + ')',
-  },
+    description: conditionDescriptions[73],
+    sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Sheik%" OR player_main LIKE "%Ryu%" OR player_main LIKE "%Olimar%" OR player_main LIKE "%Greninja%" OR player_main LIKE "%Falco%" OR player_main LIKE "%Mii Brawler%" OR player_main LIKE "%Sephiroth%" OR player_main LIKE "%Young Link%" OR player_main LIKE "%Luigi%" OR player_main LIKE "%Captain Falcon%" OR player_main LIKE "%Pit%" OR player_main LIKE "%Dark Pit%" OR player_main LIKE "%Byleth%" OR player_main LIKE "%Rosalina%" OR player_main LIKE "%Hero%" OR player_main LIKE "%Ken%" OR player_main LIKE "%Toon Link%" OR player_main LIKE "%Ness%" OR player_main LIKE "%Mega Man%" OR player_main LIKE "%Inkling%")`,
+   },
+   {
+     condition: (player) => { 
+       const lowTierCharacters = ["Mewtwo", "Robin", "Donkey Kong", "Isabelle", "Bowser Jr", "Ike", "Villager", "Zelda", "Simon", "Richter", "Kirby", "Mii Swordfighter", "Piranha Plant", "Dr. Mario", "King Dedede", "King K.Rool", "Little Mac", "Ganondorf"];
+       return player.player_mains.some((main) => lowTierCharacters.includes(main));
+     }, 
+     description: conditionDescriptions[74],
+     sqlCall: `players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Mewtwo%" OR player_main LIKE "%Robin%" OR player_main LIKE "%Donkey Kong%" OR player_main LIKE "%Isabelle%" OR player_main LIKE "%Bowser Jr%" OR player_main LIKE "%Ike%" OR player_main LIKE "%Villager%" OR player_main LIKE "%Zelda%" OR player_main LIKE "%Simon%" OR player_main LIKE "%Richter%" OR player_main LIKE "%Kirby%" OR player_main LIKE "%Mii Swordfighter%" OR player_main LIKE "%Piranha Plant%" OR player_main LIKE "%Dr. Mario%" OR player_main LIKE "%King Dedede%" OR player_main LIKE "%King K.Rool%" OR player_main LIKE "%Little Mac%" OR player_main LIKE "%Ganondorf%")`,
+   },
 
 ];
 
