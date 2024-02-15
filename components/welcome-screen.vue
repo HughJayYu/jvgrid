@@ -11,7 +11,7 @@
 			There is a new grid every day at 9:00am UTC (4:00am CST). <br>
 			A player cannot be used twice. <br>
 			<strong>The database is manually scraped, and relatively limited.</strong> If you believe I've forgotten a player of note, please submit <a href = "https://forms.gle/uAgGM34LhGcb2mfv7">an audit.</a><br>
-			<strong><a href = "https://docs.google.com/spreadsheets/d/1xFEP9ahm6jSNwKLxX7gqvBKKpetd1BiPze1-YzBei_w/edit#gid=0">Database</a> was last updated 12/6</strong> (GENESIS BLACK/Sunrise/Yun Ding 3 weekend!)
+			<strong><a href = "https://docs.google.com/spreadsheets/d/1xFEP9ahm6jSNwKLxX7gqvBKKpetd1BiPze1-YzBei_w/edit#gid=0">Database</a> was last updated 2/15</strong> (LumiRank 2023 + Tier List!)
 			More information on the categories, along with the full database, can be found <a href = "https://docs.google.com/document/d/1uX4QSPpJR9JHm8RFcN3TX6TSxNoYs1nGJFYd4M-4LzA/edit">here</a>. <br>
 			A player can main multiple characters; the search icon is just meant to serve as an identifier (Leon/LeoN).<br>
 			Shuton, for example, qualifies as both a Olimar and an Aegis player. <br>

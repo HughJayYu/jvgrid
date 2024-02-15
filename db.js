@@ -59,7 +59,8 @@ function createTable(db, db2){
 		makesmovesTop16	BOOL, 
 		fb20place		INT,
 		kag11place		INT,
-		pp8place		INT
+		pp8place		INT, 
+		lumirank23		BOOL
 	)
 	`);
 	db2.exec(`

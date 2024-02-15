@@ -80,10 +80,10 @@ const conditionDescriptions = [
   'Player mains/secondaries a character that debuted in Brawl',
   'Player mains/secondaries a character that debuted in Smash 4',
   'Player mains/secondaries a character that debuted in Ultimate',
-  'Player mains/secondaries a "Top Tier" (UltRank Feb 2023 Tier List, S tiers)', 
-  'Player mains/secondaries a "High Tier" (UltRank Feb 2023 Tier List, A tiers)',
-  'Player mains/secondaries a "Mid Tier" (UltRank Feb 2023 Tier List, B tiers)', 
-  'Player mains/secondaries a "Low/Bottom Tier" (UltRank Feb 2023 Tier List, C+D Tiers)',
+  'Player mains/secondaries a "Top Tier" (UltRank Feb 2023 Tier List (V1), S tiers)', 
+  'Player mains/secondaries a "High Tier" (UltRank Feb 2023 Tier List (V1), A tiers)',
+  'Player mains/secondaries a "Mid Tier" (UltRank Feb 2023 Tier List (V1), B tiers)', 
+  'Player mains/secondaries a "Low/Bottom Tier" (UltRank Feb 2023 Tier List (V1), C+D Tiers)',
   'Player is not from Japan, Mexico, or the United States.',
   'Player has made Top 8 at a 2023 Supermajor+ (S/S+/P Tier)', 
   'Player has made Top 8 at a 2023 Major (A/A+/S/S+/P Tier)',
@@ -114,6 +114,11 @@ const conditionDescriptions = [
   'Player placed within Top 64 at Frostbite 2020', 
   'Player was at Frostbite 2020', 
   'Player has made Top 16 at any Glitch in Ultimate',
+  'Player is on the LumiRank 2023 (Top 150 + HMs)', 
+  'Player mains/secondaries a "Top Tier" (LumiRank Feb 2024 Tier List, S tiers)', 
+  'Player mains/secondaries a "High Tier" (LumiRank Feb 2024 Tier List, A tiers)',
+  'Player mains/secondaries a "Mid Tier" (LumiRank Feb 2024 Tier List, B tiers)', 
+  'Player mains/secondaries a "Low/Bottom Tier" (LumiRank Feb 2024 Tier List, C+D Tiers)'
 ];
 const rowConditions = [
   {
@@ -347,7 +352,7 @@ const rowConditions = [
   },  
   {
     condition: (player) => player.glitchTop16 == 'TRUE',
-    description: conditionDescriptions[65],
+    description: conditionDescriptions[69],
     sqlCall: 'glitchTop16 = "TRUE"',
   },   
 ];
@@ -669,6 +674,44 @@ const columnConditions = [
     description: conditionDescriptions[66],
     sqlCall: 'kagTop8 = "TRUE"',
   },   
+  {
+    condition: (player) => player.lumirank23 == "TRUE",
+    description: conditionDescriptions[70],
+    sqlCall: 'lumirank23 = "TRUE"',
+  }, 
+  {
+    condition: (player) => { 
+      const topTierCharacters = ['Steve', 'Sonic', 'G&W', 'Snake', 'Aegis', 'R.O.B', 'Peach', 'Daisy', 'Peach', 'Daisy', 'Fox','Diddy Kong', 'Joker'];
+      return player.player_mains.some((main) => topTierCharacters.includes(main));
+    }, 
+    description: conditionDescriptions[71],
+    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE player_main LIKE "%Steve%" OR player_main LIKE "%Aegis%" OR player_main LIKE "%Joker%" OR player_main LIKE "%Sonic%" OR player_main LIKE "%Fox%" OR player_main LIKE "%R.O.B%" OR player_main LIKE "%Peach%" OR player_main LIKE "%Daisy%" OR player_main LIKE "%Diddy Kong%" OR player_main LIKE "%Snake%" OR player_main LIKE "%G&W%")',
+  },
+  {
+    condition: (player) => { 
+      const highTierCharacters = ['Kazuya', 'Min Min', 'Cloud', 'Yoshi', 'Samus', 'Dark Samus', 'Palutena', 'Pikachu', 'Sora', 'Roy', 'Wario', 'Wolf', 'Mario', 'Pac-Man', 'PT', 'Shulk', 'Bayonetta', 'Corrin', 'Lucina', 'Terry', 'Zero Suit Samus'];
+      return player.player_mains.some((main) => highTierCharacters.includes(main));
+    }, 
+    description: conditionDescriptions[72],
+    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE ' + highTierCharacters.map(char => `player_main LIKE "%${char}%"`).join(' OR ') + ')',
+  },
+  {
+    condition: (player) => { 
+      const midTierCharacters = ['Sheik', 'Ryu', 'Olimar', 'Greninja', 'Falco', 'Mii Brawler', 'Sephiroth', 'Young Link', 'Luigi', 'Captain Falcon', 'Pit', 'Dark Pit', 'Byleth', 'Rosalina', 'Hero', 'Ken', 'Toon Link', 'Ness', 'Mega Man', 'Inkling'];
+      return player.player_mains.some((main) => midTierCharacters.includes(main));
+    }, 
+    description: conditionDescriptions[73], 
+    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE ' + midTierCharacters.map(char => `player_main LIKE "%${char}%"`).join(' OR ') + ')',
+  },
+  {
+    condition: (player) => { 
+      const lowTierCharacters = ["Mewtwo", "Robin", "Donkey Kong", "Isabelle", "Bowser Jr", "Ike", "Villager", "Zelda", "Simon", "Richter", "Kirby", "Mii Swordfighter", "Piranha Plant", "Dr. Mario", "King Dedede", "King K.Rool", "Little Mac", "Ganondorf"];
+      return player.player_mains.some((main) => lowTierCharacters.includes(main));
+    }, 
+    description: conditionDescriptions[74],
+    sqlCall: 'players.player_tag IN (SELECT player_tag FROM db2.mains WHERE ' + lowTierCharacters.map(char => `player_main LIKE "%${char}%"`).join(' OR ') + ')',
+  },
+
 ];
 
 export { rowConditions, columnConditions };

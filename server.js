@@ -21,11 +21,11 @@ app.use('/api', searchRoute);
 
 // Initialize storedBoardData
 let storedBoardData = null;
-let boardID = 87;
+let boardID = 157;
 //BOARD GENERATION COMMENT STARTS HERE
 
 const db3 = new sqlite3.Database('game_boards.db');
-db3.get('SELECT * from daily_data WHERE day = 86', [], (err, row) => {
+db3.get('SELECT * from daily_data WHERE day = 156', [], (err, row) => {
 	if (err) { 
 		console.error('Error retrieving initial board:', err); 
 	} else { 
@@ -42,7 +42,7 @@ cron.schedule('0 9 * * *', () => {
     } else {
       storedBoardData = row;
       console.log(storedBoardData.possibleAnswers);
-      boardID = boardID < 200 ? boardID + 1 : 1;
+      boardID = boardID < 300 ? boardID + 1 : 1;
     }
   });
 });
